@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>PC Virtual</title>
+        <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+        <style>
+            .winbox {
+                position: fixed;
+                left: 0;
+                top: 0;
+                /* box-shadow:
+                    0 14px 28px rgba(0, 0, 0, 0.25),
+                    0 10px 10px rgba(0, 0, 0, 0.22);*/
+                /* using transform make contents blur when applied and requires more gpu memory */
+                transition:
+                    width 0.25s,
+                    height 0.25s,
+                    left 0s,
+                    top 0s;
+               /* transition-timing-function: cubic-bezier(0.1, 1, 0.1, 1);*/
+                /* contain "strict" does not make overflow contents selectable */
+                contain: layout size;
+                /* explicitly set text align to left fixes an issue with iframes alignment when centered */
+                text-align: left;
+                /* workaround for using passive listeners */
+                touch-action: none;
+            }
+            .overy-article article {
+                overflow-y: scroll;
+                height: calc(100% - 100px);
+            }
+            iframe {
+                height: calc(100% - 28px);
+                border: 0;
+            }
+
+            .fh {
+                height: 100%;
+            }
+            .fw {
+                width: 100%;
+            }
+            .wb-body {
+                height: 100%;
+            }
+            .wb-title {
+              font-family: "Pixelated MS Sans Serif";
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 0;
+            }
+            body{
+              background-color: #008080;
+              color: white;
+            }
+            .window {
+              color: black;
+            }
+            .files {
+              padding: 0;
+              list-style-type: none;
+            }
+            .tree-view{
+              overflow-y: scroll;
+              height: calc(100% - 60px);
+            }
+            .tree-view details summary{
+              list-style: none;
+            }
+            .files a:active{
+              border: 0.75px dashed black;
+              margin: calc(2px - 0.75px);
+            }
+            .files a{
+              padding: 6px;
+              color: white;
+              /*font-family: "Pixelated MS Sans Serif";*/
+              text-align: center;
+              float: left;
+              margin: 2px;
+              display: block;
+              width: 72px;
+              height: auto;
+              background-color: transparent;
+            }
+            .fontpix {
+              font-family: "Pixelated MS Sans Serif";
+            }
+            ul,ol{
+              padding-left: 15px;
+            }
+            .nomarg .wb-body{
+              padding: 0;
+              margin: 0;
+              
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+        <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.82/dist/js/winbox.min.js"></script>
+        
+        <h3>PC Virtual</h3>
+        <h4>EuskadiTech(TM)</h4>
+        <ul class="files">
+            <li><a onclick="AppPlus()"><img src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus.axl</a></li>
+            <li><a onclick="AppTxapela()"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela.axl</a></li>
+            <li><a onclick="AppBienvenidx()"><img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx.axl</a></li>
+        </ul>
+        <script>
+            function FixTabs() {
+                const tabs = document.querySelectorAll("menu[role=tablist]");
+
+                for (let i = 0; i < tabs.length; i++) {
+                    const tab = tabs[i];
+
+                    const tabButtons = tab.querySelectorAll(
+                        "menu[role=tablist] > button"
+                    );
+
+                    tabButtons.forEach(btn =>
+                        btn.addEventListener("click", e => {
+                            e.preventDefault();
+
+                            tabButtons.forEach(button => {
+                                if (
+                                    button.getAttribute("aria-controls") ===
+                                    e.target.getAttribute("aria-controls")
+                                ) {
+                                    button.setAttribute("aria-selected", true);
+                                    openTab(e, tab);
+                                } else {
+                                    button.setAttribute("aria-selected", false);
+                                }
+                            });
+                        })
+                    );
+                }
+            };
+            document.addEventListener("DOMContentLoaded", FixTabs)
+
+            function openTab(event, tab) {
+                const articles =
+                    tab.parentNode.querySelectorAll('[role="tabpanel"]');
+                articles.forEach(p => {
+                    p.setAttribute("hidden", true);
+                });
+                const article = tab.parentNode.querySelector(
+                    `[role="tabpanel"]#${event.target.getAttribute(
+                        "aria-controls"
+                    )}`
+                );
+                article.removeAttribute("hidden");
+            }
+            const template = document.createElement("div");
+            template.innerHTML = `
+  <div class="title-bar wb-header">
+    <div class="title-bar-text wb-title wb-drag fw"></div>
+    <div class="title-bar-controls wb-control">
+      <button class="wb-min" aria-label="Minimize"></button>
+      <button class="wb-max" aria-label="Maximize"></button>
+      <button class="wb-close" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body wb-body">
+  </div>
+`;
+            function AppBienvenidx() {
+                new WinBox("Bienvenidx", {
+                    template,
+                    html: `
+        <section class="tabs fh overy-article">
+  <menu role="tablist" aria-label="Sample Tabs">
+    <button role="tab" aria-selected="true" aria-controls="tab-A">Primeros Pasos</button>
+    <button role="tab" aria-controls="tab-B">Axis</button>
+    <button role="tab" aria-controls="tab-C">Tab C</button>
+  </menu>
+  <!-- the tab content -->
+  <article role="tabpanel" id="tab-A" class="fontpix">
+    Sigue estos pasos para una buena experiencia con tu PC Virtual.
+    <ol>
+      <li>Iniciar sesión (o crear una cuenta) en Axis</li>
+    </ol>
+  </article>
+  <article role="tabpanel" hidden id="tab-B">
+    <h3>More...</h3>
+    <p>This tab contains a GroupBox</p>
+    <fieldset>
+      <legend>Today's mood</legend>
+      <div class="field-row">
+        <input id="radio10" type="radio" name="fieldset-example2">
+        <label for="radio10">Claire Saffitz</label>
+      </div>
+      <div class="field-row">
+        <input id="radio11" type="radio" name="fieldset-example2">
+        <label for="radio11">Brad Leone</label>
+      </div>
+      <div class="field-row">
+        <input id="radio12" type="radio" name="fieldset-example2">
+        <label for="radio12">Chris Morocco</label>
+      </div>
+      <div class="field-row">
+        <input id="radio13" type="radio" name="fieldset-example2">
+        <label for="radio13">Carla Lalli Music</label>
+      </div>
+    </fieldset>
+  </article>
+  <article role="tabpanel" hidden id="tab-C">
+    <h3>Tab 3</h3>
+    <p>Lorem Ipsum Dolor Sit</p>
+  </article>
+</section>
+`,
+                    class: ["window"],
+                    width: 300,
+                    height: 300
+                });
+                FixTabs();
+            }
+            function AppPlus() {
+                new WinBox("Axis Plus", {
+                    html: '<iframe src="https://tech.eus/plus/one.php" width="100%"></iframe>',
+                    template,
+                    class: ["window", "nomarg"],
+                    width: 300,
+                    height: 500
+                });
+          
+            }
+            function ueid() {
+              return "UEID-"+crypto.randomUUID()
+            }
+            function AppTxapela() {
+              const compra = function() {
+                const tree = ueid()
+                const treeload = ueid()
+                  // Nota: La ruta /build/prices.html dirige
+                  //       a la compilación mas reciente de
+                  //       los precios.
+                new WinBox("Busqueda cruzada: Precios", {
+                    html: `
+<ul class="tree-view" id="${tree}">
+  <li><button id="${treeload}" hx-get="/build/prices.html" hx-swap="outerHTML" hx-target="#${tree}">Pulsa para cargar la busqueda.</button></li>
+</ul>
+`,
+                    template,
+                    class: ["window"],
+                    width: 300,
+                    height: 300,
+                    x: "center",
+                    y: "top"
+                });
+                htmx.process(document.body);
+                document.getElementById(treeload).click()
+              }
+              const index = function() {
+                const comprabtn = ueid()
+                new WinBox("Txapela", {
+                    html: `
+<button id="${comprabtn}"><img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras</button>
+`,
+                    template,
+                    class: ["window"],
+                    width: 300,
+                    height: 110,
+                    x: "center",
+                    y: "bottom"
+                });
+                document.getElementById(comprabtn).onclick = compra
+              }
+              index()
+            }
+        </script>
+    </body>
+</html>
