@@ -7,7 +7,7 @@ const compra = function () {
         fetch("https://tech.eus/build/prices.html")
             .then(response => response.text())
             .then(text => {
-                new WinBox("Busqueda cruzada: Precios", {
+                new WinBox("Calcular Precios", {
                     html: text,
                     template,
                     class: ["window"],
