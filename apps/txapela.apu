@@ -21,11 +21,13 @@ const compra = function () {
     document.getElementById(treeload).click();
 };
 const index = function () {
-    const comprabtn = ueid();
+    const btn = Annapurna.AppSDK.UIKit.components.button({
+        title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras',
+        onclick: compra
+    });
+
     new WinBox("Txapela", {
-        html: `
-<button id="${comprabtn}"><img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras</button>
-`,
+        mount: btn.dom,
         template,
         class: ["window"],
         width: 300,
@@ -33,33 +35,5 @@ const index = function () {
         x: "center",
         y: "bottom"
     });
-    document.getElementById(comprabtn).onclick = compra;
 };
-const example_config = {
-    title: "Tabs demo",
-    tabs: [
-        {
-            title: "Tab 1",
-            selected: true,
-            usefont: true,
-            content: [
-                Annapurna.AppSDK.UIKit.components.button({
-                    title: "pepe",
-                    onclick: function () {
-                        alert(1);
-                    }
-                })
-            ]
-        }
-    ]
-};
-var e = Annapurna.AppSDK.UIKit.components.tabs(example_config);
-new WinBox("Txapela", {
-    mount: e.dom,
-    template,
-    class: ["window"],
-    width: 300,
-    height: 110,
-    x: "center",
-    y: "bottom"
-});
+index();
