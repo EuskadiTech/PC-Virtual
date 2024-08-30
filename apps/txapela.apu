@@ -1,0 +1,65 @@
+const compra = function () {
+    const tree = ueid();
+    const treeload = ueid();
+    // Nota: La ruta /build/prices.html dirige
+    //       a la compilación mas reciente de
+    //       los precios.
+    new WinBox("Busqueda cruzada: Precios", {
+        html: `
+<ul class="tree-view" id="${tree}">
+  <li><button id="${treeload}">Pulsa para cargar la busqueda.</button></li>
+</ul>
+`,
+        template,
+        class: ["window"],
+        width: 300,
+        height: 300,
+        x: "center",
+        y: "top"
+    });
+    htmx.process(document.body);
+    document.getElementById(treeload).click();
+};
+const index = function () {
+    const comprabtn = ueid();
+    new WinBox("Txapela", {
+        html: `
+<button id="${comprabtn}"><img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras</button>
+`,
+        template,
+        class: ["window"],
+        width: 300,
+        height: 110,
+        x: "center",
+        y: "bottom"
+    });
+    document.getElementById(comprabtn).onclick = compra;
+};
+const example_config = {
+    title: "Tabs demo",
+    tabs: [
+        {
+            title: "Tab 1",
+            selected: true,
+            usefont: true,
+            content: [
+                Annapurna.AppSDK.UIKit.components.button({
+                    title: "pepe",
+                    onclick: function () {
+                        alert(1);
+                    }
+                })
+            ]
+        }
+    ]
+};
+var e = Annapurna.AppSDK.UIKit.components.tabs(example_config);
+new WinBox("Txapela", {
+    mount: e.dom,
+    template,
+    class: ["window"],
+    width: 300,
+    height: 110,
+    x: "center",
+    y: "bottom"
+});
