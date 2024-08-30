@@ -2,6 +2,7 @@ const compra = function () {
     // Nota: La ruta /build/prices.html dirige
     //       a la compilación mas reciente de
     //       los precios.
+    console.log("Busqueda iniciada...")
     fetch("https://tech.eus/build/prices.html")
         .then(res => res.text())
         .then(text => {
@@ -19,7 +20,7 @@ const compra = function () {
 const index = function () {
     const btn = Annapurna.AppSDK.UIKit.components.button({
         title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras',
-        onclick: () => {compra()}
+        onclick: compra
     });
 
     new WinBox("Txapela", {
