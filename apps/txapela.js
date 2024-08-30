@@ -2,13 +2,11 @@ const compra = function () {
     // Nota: La ruta /build/prices.html dirige
     //       a la compilación mas reciente de
     //       los precios.
-    console.log("Busqueda iniciada...")
     fetch("https://tech.eus/build/prices.html")
-        .then((req) => {
-            console.log(req)
-            console.log(req.text())
+        .then(response => response.text())
+        .then((text) => {
             new WinBox("Busqueda cruzada: Precios", {
-                html: req.text(),
+                html: text,
                 template,
                 class: ["window"],
                 width: 300,
