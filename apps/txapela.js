@@ -16,7 +16,7 @@ const compra = function () {
                     template,
                     class: ["window"],
                     width: 300,
-                    x: "left",
+                    x: "center",
                     height: 300,
                     y: "center"
                 });
@@ -58,7 +58,7 @@ const compra = function () {
         class: ["window"],
         width: 300,
         height: 300,
-        x: "right",
+        x: "center",
         y: "center"
     });
 };
@@ -75,7 +75,7 @@ const index = function () {
         width: 300,
         height: 110,
         x: "center",
-        y: "top"
+        y: "center"
     });
 };
 index();
