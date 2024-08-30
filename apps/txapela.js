@@ -8,7 +8,7 @@ const compra = function () {
             .then(response => response.text())
             .then(text => {
                 new WinBox("Calcular Precios", {
-                    html: text,
+                    html: "Los precios se ordenan con el [numero de prioridad]." + text,
                     template,
                     class: ["window"],
                     width: 300,
