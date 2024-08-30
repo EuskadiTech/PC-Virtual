@@ -19,7 +19,7 @@ const compra = function () {
 const index = function () {
     const btn = Annapurna.AppSDK.UIKit.components.button({
         title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras',
-        onclick: compra
+        onclick: () => {compra()}
     });
 
     new WinBox("Txapela", {
