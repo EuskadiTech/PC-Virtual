@@ -1,24 +1,20 @@
 const compra = function () {
-    const tree = ueid();
-    const treeload = ueid();
     // Nota: La ruta /build/prices.html dirige
     //       a la compilación mas reciente de
     //       los precios.
-    new WinBox("Busqueda cruzada: Precios", {
-        html: `
-<ul class="tree-view" id="${tree}">
-  <li><button id="${treeload}">Pulsa para cargar la busqueda.</button></li>
-</ul>
-`,
-        template,
-        class: ["window"],
-        width: 300,
-        height: 300,
-        x: "center",
-        y: "top"
-    });
-    htmx.process(document.body);
-    document.getElementById(treeload).click();
+    fetch("https://tech.eus/build/prices.html")
+        .then(res => res.text())
+        .then(text => {
+            new WinBox("Busqueda cruzada: Precios", {
+                html: text,
+                template,
+                class: ["window"],
+                width: 300,
+                height: 300,
+                x: "center",
+                y: "top"
+            });
+        });
 };
 const index = function () {
     const btn = Annapurna.AppSDK.UIKit.components.button({
