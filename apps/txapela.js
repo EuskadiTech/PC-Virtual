@@ -1,4 +1,6 @@
 const compra = function () {
+    var r = {};
+    const wwid = Annapurna.AppSDK.uuid();
     const precios = function () {
         // Programa para calcular los precios de productos en varias tiendas y seleccionar el URL del la tienda mas barata en cada producto.
         // Nota: La ruta /build/prices.html dirige
@@ -8,13 +10,35 @@ const compra = function () {
             .then(response => response.text())
             .then(text => {
                 new WinBox("Calcular Precios", {
-                    html: "Los precios se ordenan con el [numero de prioridad]." + text,
+                    html:
+                        "Los precios se ordenan con el [numero de prioridad]." +
+                        text,
                     template,
                     class: ["window"],
                     width: 300,
-                    x: "center",
+                    x: "left",
                     height: 300,
                     y: "center"
+                });
+                document.querySelectorAll(".sel_prod").forEach(el => {
+                    el.onclick = () => {
+                        r[el.dataset.key] = {
+                            url: el.dataset.url,
+                            sup: el.dataset.sup
+                        };
+                        document.getElementById(wwid).innerHTML = "";
+                        Object.entries(r).forEach(el => {
+                            const key = el[0];
+                            const value = el[1];
+                            var li = document.createElement("li");
+                            var a = document.createElement("a");
+                            a.innerText = key + ": " + value["sup"];
+                            a.href = value["url"];
+                            a.target = "_blank";
+                            li.append(a);
+                            document.getElementById(wwid).append(li);
+                        });
+                    };
                 });
             });
     };
@@ -23,14 +47,18 @@ const compra = function () {
         onclick: precios
     });
     const div = document.createElement("div");
-    div.append(btn1.dom, " ", btn1.dom);
-    new WinBox("Compras", {
+    div.className = "fh";
+    const el = document.createElement("ul");
+    el.id = wwid;
+    el.className = "tree-view";
+    div.append(btn1.dom, " ", btn1.dom, " ", el);
+    new WinBox("Lista de la Compra", {
         mount: div,
         template,
         class: ["window"],
         width: 300,
-        height: 180,
-        x: "center",
+        height: 300,
+        x: "right",
         y: "center"
     });
 };
