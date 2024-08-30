@@ -4,10 +4,9 @@ const compra = function () {
     //       los precios.
     console.log("Busqueda iniciada...")
     fetch("https://tech.eus/build/prices.html")
-        .then(res => res.text())
-        .then(text => {
+        .then((req) => {
             new WinBox("Busqueda cruzada: Precios", {
-                html: text,
+                html: req.text(),
                 template,
                 class: ["window"],
                 width: 300,
