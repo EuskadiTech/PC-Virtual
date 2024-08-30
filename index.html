@@ -111,10 +111,76 @@
         <h4>EuskadiTech(TM)</h4>
         <ul class="files">
             <li><a onclick="AppPlus()"><img src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus.axl</a></li>
-            <li><a onclick="AppTxapela()"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela.axl</a></li>
+            <li><a onclick="Annapurna.Kernel.load('apps/txapela.js')"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela.axl</a></li>
             <li><a onclick="AppBienvenidx()"><img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx.axl</a></li>
         </ul>
         <script>
+          let Annapurna = {
+            Kernel: {
+              load: (url) => {
+                fetch(url).then((res) => res.text()).then((text) => {
+                  Function(text)();
+                })
+              }
+            },
+            AppSDK: {
+              uuid: () => {
+                return "UUID-"+crypto.randomUUID()
+              },
+              UIKit: {
+                components: {
+                  button: (config) =>{
+                    var el = document.createElement("button")
+                    el.innerHTML = config.title
+                    el.id = Annapurna.AppSDK.uuid()
+                    el.onclick = config.onclick
+                    return {"dom": el, "id": el.id}
+                  },
+                  tabs: (config) => {
+                    
+                    // section class="tabs fh overy-article"
+                    // menu role="tablist" aria-label="Sample Tabs"
+                    // button role="tab" aria-selected="true" aria-controls="tab-A"
+                    // article role="tabpanel" id="tab-A" class="fontpix"
+                    var section = document.createElement("section")
+                    section.className = "tabs fh overy-article"
+                    
+                    var menu = document.createElement("menu")
+                    menu.role = "tablist"
+                    menu.ariaLabel = config.title
+                    section.append(menu)
+                    config.tabs.forEach((tab) => {
+                      var button = document.createElement("button")
+                      button.role = "tab"
+                      button.innerText = tab.title
+                      const tabid = Annapurna.AppSDK.uuid()
+                      button.ariaControls = tabid
+                      if (tab.selected) {
+                        button.ariaSelected = true
+                      }
+                      var article = document.createElement("article")
+                      article.role = "tabpanel"
+                      article.id = tabid
+                      if (tab.usefont) {
+                        article.className = "fontpix"
+                      }
+                      if (!tab.selected) {
+                        article.hidden = true
+                      }
+                      tab.content.forEach((element) => {
+                        article.append(element.dom)
+                      })
+                      
+                      menu.append(button)
+                      section.append(article)
+                    });
+                    return {dom: section}
+                  }
+                }
+              }
+            }
+          }
+          console.log(1)
             function FixTabs() {
                 const tabs = document.querySelectorAll("menu[role=tablist]");
 
@@ -233,49 +299,6 @@
                     height: 500
                 });
           
-            }
-            function ueid() {
-              return "UEID-"+crypto.randomUUID()
-            }
-            function AppTxapela() {
-              const compra = function() {
-                const tree = ueid()
-                const treeload = ueid()
-                  // Nota: La ruta /build/prices.html dirige
-                  //       a la compilación mas reciente de
-                  //       los precios.
-                new WinBox("Busqueda cruzada: Precios", {
-                    html: `
-<ul class="tree-view" id="${tree}">
-  <li><button id="${treeload}" hx-get="/build/prices.html" hx-swap="outerHTML" hx-target="#${tree}">Pulsa para cargar la busqueda.</button></li>
-</ul>
-`,
-                    template,
-                    class: ["window"],
-                    width: 300,
-                    height: 300,
-                    x: "center",
-                    y: "top"
-                });
-                htmx.process(document.body);
-                document.getElementById(treeload).click()
-              }
-              const index = function() {
-                const comprabtn = ueid()
-                new WinBox("Txapela", {
-                    html: `
-<button id="${comprabtn}"><img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Compras</button>
-`,
-                    template,
-                    class: ["window"],
-                    width: 300,
-                    height: 110,
-                    x: "center",
-                    y: "bottom"
-                });
-                document.getElementById(comprabtn).onclick = compra
-              }
-              index()
             }
         </script>
     </body>
