@@ -205,7 +205,7 @@ if (window.location.hash != "") {
       template,
       class: ["window"],
       width: 300,
-      height: 200,
+      height: 150,
       x: "right",
       y: "bottom"
     });
@@ -218,7 +218,7 @@ if (!FS_BASE) {
     template,
     class: ["window"],
     width: 300,
-    height: 150,
+    height: 200,
     x: "center",
     y: "center"
   });
