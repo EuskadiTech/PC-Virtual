@@ -11,7 +11,7 @@ const compra = function () {
             .then(text => {
                 new WinBox("Calcular Precios", {
                     html:
-                        "Los precios se ordenan con el [numero de prioridad]." +
+                        "<small>Los precios se ordenan con el [numero de prioridad].</small>" +
                         text,
                     template,
                     class: ["window"],
