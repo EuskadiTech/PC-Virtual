@@ -60,7 +60,7 @@ const compra = function(file) {
           template,
           class: ["window", "fontpix"],
           width: 225,
-          height: 75,
+          height: 96,
           x: "center",
           y: "center"
         });
