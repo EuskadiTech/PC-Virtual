@@ -14,7 +14,7 @@ const index = function() {
   new WinBox("Mis Archivos", {
     mount: div,
     template,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 300,
     height: 300,
     x: "center",

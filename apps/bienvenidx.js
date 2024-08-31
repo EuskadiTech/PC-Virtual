@@ -24,7 +24,7 @@ new WinBox("Bienvenidx", {
   </article>
 </section>
 `,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 350,
     height: 400
 });

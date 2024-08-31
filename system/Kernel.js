@@ -203,9 +203,9 @@ if (window.location.hash != "") {
     var win2 = new WinBox("Activación", {
       html: "<h4>¡Dispositivo activado de forma automatica!</h4><br>Se cerrará esta ventana en 5 segundos",
       template,
-      class: ["window"],
+      class: ["window", "fontpix"],
       width: 300,
-      height: 150,
+      height: 175,
       x: "right",
       y: "bottom"
     });
@@ -216,7 +216,7 @@ if (!FS_BASE) {
   var win = new WinBox("Activación", {
     html: "<h4>Activa este dispositivo.</h4><br>Debes de activar Annapurna para poder guardar archivos.<br><input size='35' id='fsact' placeholder='AABBCCDDEEFF'></input><button id='fsactbtn'>Activar</button>",
     template,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 300,
     height: 200,
     x: "center",
@@ -264,9 +264,9 @@ if (!FS_BASE) {
     var win2 = new WinBox("Activación", {
       html: "<h4>¡Dispositivo activado correctamente!</h4><br>Se cerrará esta ventana en 5 segundos",
       template,
-      class: ["window"],
+      class: ["window", "fontpix"],
       width: 300,
-      height: 150,
+      height: 175,
       x: "right",
       y: "bottom"
     });

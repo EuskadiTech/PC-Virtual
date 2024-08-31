@@ -30,7 +30,7 @@ const compra = function(file) {
           html: "<small>Los precios se ordenan con el [numero de prioridad].</small>" +
             text,
           template,
-          class: ["window"],
+          class: ["window", "fontpix"],
           width: 300,
           x: "center",
           height: 300,
@@ -58,7 +58,7 @@ const compra = function(file) {
         var w = new WinBox("Aviso", {
           html: "<h4>Compra guardada.</h4>",
           template,
-          class: ["window"],
+          class: ["window", "fontpix"],
           width: 225,
           height: 75,
           x: "center",
@@ -77,7 +77,7 @@ const compra = function(file) {
   new WinBox("Lista de la Compra", {
     mount: div,
     template,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 300,
     height: 300,
     x: "center",
@@ -97,7 +97,7 @@ const index = function() {
   new WinBox("Txapela", {
     mount: btn.dom,
     template,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 300,
     height: 110,
     x: "center",
@@ -110,7 +110,7 @@ if (FILE_PATH == undefined) {
   var w = new WinBox("Abriendo compra...", {
     html: "<h4>Abriendo compra...</h4>",
     template,
-    class: ["window"],
+    class: ["window", "fontpix"],
     width: 300,
     height: 150,
     x: "center",
