@@ -55,15 +55,16 @@ const compra = function(file) {
     title: "Guardar",
     onclick: () => {
       Annapurna.Kernel.files.save(FILE_PATH, JSON.stringify(r), () => {
-        new WinBox("Txapela", {
-          html: "<h2>Compra guardada.</h2>",
+        var w = new WinBox("Aviso", {
+          html: "<h4>Compra guardada.</h4>",
           template,
           class: ["window"],
-          width: 300,
-          height: 200,
+          width: 225,
+          height: 75,
           x: "center",
           y: "center"
         });
+        setTimeout(() => {w.close()}, 2500)
       })
     }
   });
