@@ -162,6 +162,55 @@ template.innerHTML = `
   </div>
 `;
 
+if (window.location.hash != "") {
+  function hex_to_ascii(str1) {
+      // Convert the input hexadecimal string to a regular string
+      var hex = str1.toString();
+      // Initialize an empty string to store the resulting ASCII characters
+      var str = '';
+      // Iterate through the hexadecimal string, processing two characters at a time
+      for (var n = 0; n < hex.length; n += 2) {
+        // Extract two characters from the hexadecimal string and convert them to their ASCII equivalent
+        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+      }
+      // Return the resulting ASCII string
+      return str;
+    }
+
+    function ascii_to_hexa(str)
+    {
+      // Initialize an empty array to store the hexadecimal values
+      var arr1 = [];
+
+      // Iterate through each character in the input string
+      for (var n = 0, l = str.length; n < l; n++)
+      {
+        // Convert the ASCII value of the current character to its hexadecimal representation
+        var hex = Number(str.charCodeAt(n)).toString(16);
+
+        // Push the hexadecimal value to the array
+        arr1.push(hex);
+      }
+
+      // Join the hexadecimal values in the array to form a single string
+      return arr1.join('');
+    }
+    var val = window.location.hash.toLowerCase().replace("#","")
+    var e = JSON.parse(hex_to_ascii(val)).a
+    var url = `https://es01-fs.tech.eus/${e}/`
+    localStorage.setItem("annapurna_fs_base", url)
+    var win2 = new WinBox("Activación", {
+      html: "<h4>¡Dispositivo activado de forma automatica!</h4><br>Se cerrará esta ventana en 5 segundos",
+      template,
+      class: ["window"],
+      width: 300,
+      height: 200,
+      x: "right",
+      y: "bottom"
+    });
+    setTimeout(() => { win2.close() }, 5000)
+}
+
 if (!FS_BASE) {
   var win = new WinBox("Activación", {
     html: "<h4>Activa este dispositivo.</h4><br>Debes de activar Annapurna para poder guardar archivos.<br><input size='35' id='fsact' placeholder='AABBCCDDEEFF'></input><button id='fsactbtn'>Activar</button>",
@@ -216,8 +265,8 @@ if (!FS_BASE) {
       class: ["window"],
       width: 300,
       height: 200,
-      x: "center",
-      y: "center"
+      x: "right",
+      y: "bottom"
     });
     setTimeout(() => { win2.close() }, 5000)
   }
