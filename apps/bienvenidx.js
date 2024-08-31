@@ -14,19 +14,19 @@ new WinBox("Bienvenidx", {
       <li>Activa este dispositivo</li>
     </ol>
   </article>
-  <article role="tabpanel" hidden id="tab-B">
+  <article role="tabpanel" hidden id="tab-B" class="fontpix">
     <h3>Versión del S.O.</h3>
     <div hx-get="/VERSION.html" hx-swap="InnerHTML" hx-trigger="load"></div>
   </article>
-  <article role="tabpanel" hidden id="tab-C">
+  <article role="tabpanel" hidden id="tab-C" class="fontpix">
     <h3>Tab 3</h3>
     <p>Lorem Ipsum Dolor Sit</p>
   </article>
 </section>
 `,
     class: ["window"],
-    width: 300,
-    height: 300
+    width: 350,
+    height: 400
 });
 FixTabs();
 htmx.process(document.body)
