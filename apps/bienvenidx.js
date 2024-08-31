@@ -16,7 +16,7 @@ new WinBox("Bienvenidx", {
   </article>
   <article role="tabpanel" hidden id="tab-B" class="fontpix">
     <h3>Versión del S.O.</h3>
-    <div hx-get="/VERSION.html" hx-swap="InnerHTML" hx-trigger="load"></div>
+    <div hx-get="VERSION.html" hx-swap="InnerHTML" hx-trigger="load"></div>
     <button onclick="window.location.reload(true)">Recargar</button>
   </article>
   <article role="tabpanel" hidden id="tab-C" class="fontpix">
