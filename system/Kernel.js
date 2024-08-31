@@ -199,6 +199,7 @@ if (window.location.hash != "") {
     var e = JSON.parse(hex_to_ascii(val)).a
     var url = `https://es01-fs.tech.eus/${e}/`
     localStorage.setItem("annapurna_fs_base", url)
+    var FS_BASE = localStorage.getItem("annapurna_fs_base");
     var win2 = new WinBox("Activación", {
       html: "<h4>¡Dispositivo activado de forma automatica!</h4><br>Se cerrará esta ventana en 5 segundos",
       template,
@@ -259,6 +260,7 @@ if (!FS_BASE) {
     var url = `https://es01-fs.tech.eus/${e}/`
     localStorage.setItem("annapurna_fs_base", url)
     win.close()
+    var FS_BASE = localStorage.getItem("annapurna_fs_base");
     var win2 = new WinBox("Activación", {
       html: "<h4>¡Dispositivo activado correctamente!</h4><br>Se cerrará esta ventana en 5 segundos",
       template,
@@ -268,6 +270,7 @@ if (!FS_BASE) {
       x: "right",
       y: "bottom"
     });
+    
     setTimeout(() => { win2.close() }, 5000)
   }
 }
