@@ -218,7 +218,7 @@ if (!FS_BASE) {
     template,
     class: ["window"],
     width: 300,
-    height: 200,
+    height: 150,
     x: "center",
     y: "center"
   });
@@ -266,7 +266,7 @@ if (!FS_BASE) {
       template,
       class: ["window"],
       width: 300,
-      height: 200,
+      height: 150,
       x: "right",
       y: "bottom"
     });
