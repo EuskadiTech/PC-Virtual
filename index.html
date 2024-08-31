@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.25" />
         <title>Annapurna</title>
         <link rel="stylesheet" href="https://unpkg.com/xp.css" />
         <style>
@@ -87,7 +87,6 @@
               margin: 2px;
               display: block;
               width: 72px;
-              height: auto;
               background-color: transparent;
             }
             .fontpix {
@@ -101,6 +100,7 @@
               margin: 0;
               
             }
+            
             .sel_prod.gold{color: green;}
         </style>
     </head>
@@ -110,198 +110,14 @@
         
         <h3>Annapurna oXP</h3>
         <h4>EuskadiTech(TM)</h4>
-        <button onclick="window.location.reload(true)">Recargar S.O.</button>
+        <button onclick="window.location.reload(true)">Recargar</button>
         <ul class="files">
-            <li><a onclick="AppPlus()"><img src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus.axl</a></li>
-            <li><a onclick="Annapurna.Kernel.load('apps/txapela.js')"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela.js</a></li>
-            <li><a onclick="AppBienvenidx()"><img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx.axl</a></li>
+            <li><a onclick="Annapurna.Kernel.load('apps/axisplus.js')"><img src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus</a></li>
+            <li><a onclick="Annapurna.Kernel.load('apps/txapela.js')"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela</a></li>
+            <li><a onclick="Annapurna.Kernel.load('apps/files.js')"><img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" width="64">Mis Archivos</a></li>
+            <li><a onclick="Annapurna.Kernel.load('apps/bienvenidx.js')"><img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx</a></li>
         </ul>
-        <script>
-          let Annapurna = {
-            Kernel: {
-              load: (url) => {
-                fetch(url).then((res) => res.text()).then((text) => {
-                  Function(text)();
-                })
-              }
-            },
-            AppSDK: {
-              uuid: () => {
-                return "UUID-"+crypto.randomUUID()
-              },
-              UIKit: {
-                components: {
-                  button: (config) =>{
-                    var el = document.createElement("button")
-                    el.innerHTML = config.title
-                    el.id = Annapurna.AppSDK.uuid()
-                    el.onclick = config.onclick
-                    return {"dom": el, "id": el.id}
-                  },
-                  tabs: (config) => {
-                    
-                    // section class="tabs fh overy-article"
-                    // menu role="tablist" aria-label="Sample Tabs"
-                    // button role="tab" aria-selected="true" aria-controls="tab-A"
-                    // article role="tabpanel" id="tab-A" class="fontpix"
-                    var section = document.createElement("section")
-                    section.className = "tabs fh overy-article"
-                    
-                    var menu = document.createElement("menu")
-                    menu.role = "tablist"
-                    menu.ariaLabel = config.title
-                    section.append(menu)
-                    config.tabs.forEach((tab) => {
-                      var button = document.createElement("button")
-                      button.role = "tab"
-                      button.innerText = tab.title
-                      const tabid = Annapurna.AppSDK.uuid()
-                      button.ariaControls = tabid
-                      if (tab.selected) {
-                        button.ariaSelected = true
-                      }
-                      var article = document.createElement("article")
-                      article.role = "tabpanel"
-                      article.id = tabid
-                      if (tab.usefont) {
-                        article.className = "fontpix"
-                      }
-                      if (!tab.selected) {
-                        article.hidden = true
-                      }
-                      tab.content.forEach((element) => {
-                        article.append(element.dom)
-                      })
-                      
-                      menu.append(button)
-                      section.append(article)
-                    });
-                    return {dom: section}
-                  }
-                }
-              }
-            }
-          }
-          console.log(1)
-            function FixTabs() {
-                const tabs = document.querySelectorAll("menu[role=tablist]");
-
-                for (let i = 0; i < tabs.length; i++) {
-                    const tab = tabs[i];
-
-                    const tabButtons = tab.querySelectorAll(
-                        "menu[role=tablist] > button"
-                    );
-
-                    tabButtons.forEach(btn =>
-                        btn.addEventListener("click", e => {
-                            e.preventDefault();
-
-                            tabButtons.forEach(button => {
-                                if (
-                                    button.getAttribute("aria-controls") ===
-                                    e.target.getAttribute("aria-controls")
-                                ) {
-                                    button.setAttribute("aria-selected", true);
-                                    openTab(e, tab);
-                                } else {
-                                    button.setAttribute("aria-selected", false);
-                                }
-                            });
-                        })
-                    );
-                }
-            };
-            document.addEventListener("DOMContentLoaded", FixTabs)
-
-            function openTab(event, tab) {
-                const articles =
-                    tab.parentNode.querySelectorAll('[role="tabpanel"]');
-                articles.forEach(p => {
-                    p.setAttribute("hidden", true);
-                });
-                const article = tab.parentNode.querySelector(
-                    `[role="tabpanel"]#${event.target.getAttribute(
-                        "aria-controls"
-                    )}`
-                );
-                article.removeAttribute("hidden");
-            }
-            const template = document.createElement("div");
-            template.innerHTML = `
-  <div class="title-bar wb-header">
-    <div class="title-bar-text wb-title wb-drag fw"></div>
-    <div class="title-bar-controls wb-control">
-      <button class="wb-min" aria-label="Minimize"></button>
-      <button class="wb-max" aria-label="Maximize"></button>
-      <button class="wb-close" aria-label="Close"></button>
-    </div>
-  </div>
-  <div class="window-body wb-body">
-  </div>
-`;
-            function AppBienvenidx() {
-                new WinBox("Bienvenidx", {
-                    template,
-                    html: `
-        <section class="tabs fh overy-article">
-  <menu role="tablist" aria-label="Sample Tabs">
-    <button role="tab" aria-selected="true" aria-controls="tab-A">Primeros Pasos</button>
-    <button role="tab" aria-controls="tab-B">Axis</button>
-    <button role="tab" aria-controls="tab-C">Tab C</button>
-  </menu>
-  <!-- the tab content -->
-  <article role="tabpanel" id="tab-A" class="fontpix">
-    Sigue estos pasos para una buena experiencia con tu PC Virtual.
-    <ol>
-      <li>Iniciar sesión (o crear una cuenta) en Axis</li>
-    </ol>
-  </article>
-  <article role="tabpanel" hidden id="tab-B">
-    <h3>More...</h3>
-    <p>This tab contains a GroupBox</p>
-    <fieldset>
-      <legend>Today's mood</legend>
-      <div class="field-row">
-        <input id="radio10" type="radio" name="fieldset-example2">
-        <label for="radio10">Claire Saffitz</label>
-      </div>
-      <div class="field-row">
-        <input id="radio11" type="radio" name="fieldset-example2">
-        <label for="radio11">Brad Leone</label>
-      </div>
-      <div class="field-row">
-        <input id="radio12" type="radio" name="fieldset-example2">
-        <label for="radio12">Chris Morocco</label>
-      </div>
-      <div class="field-row">
-        <input id="radio13" type="radio" name="fieldset-example2">
-        <label for="radio13">Carla Lalli Music</label>
-      </div>
-    </fieldset>
-  </article>
-  <article role="tabpanel" hidden id="tab-C">
-    <h3>Tab 3</h3>
-    <p>Lorem Ipsum Dolor Sit</p>
-  </article>
-</section>
-`,
-                    class: ["window"],
-                    width: 300,
-                    height: 300
-                });
-                FixTabs();
-            }
-            function AppPlus() {
-                new WinBox("Axis Plus", {
-                    html: '<iframe src="https://tech.eus/plus/one.php" width="100%"></iframe>',
-                    template,
-                    class: ["window", "nomarg"],
-                    width: 300,
-                    height: 500
-                });
-          
-            }
-        </script>
+        <script src="system/Kernel.js"></script>
+        
     </body>
 </html>
