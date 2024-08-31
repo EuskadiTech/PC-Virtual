@@ -10,14 +10,14 @@ let Annapurna = {
     },
     files: {
       save: (path, content, callback) => {
-        fetch(FS_BASE + "fileup/" + path, { method: "post", body: content })
+        fetch(FS_BASE + "fileup/" + encodeURI(path), { method: "post", body: content })
           .then(res => res.text())
           .then(text => {
             callback()
           });
       },
       open: (mode, path, callback) => {
-        var fet = fetch(FS_BASE + "file/" + path);
+        var fet = fetch(FS_BASE + "file/" + encodeURI(path));
         switch (mode) {
           case "text":
             fet.then(res => res.text()).then(text => {
