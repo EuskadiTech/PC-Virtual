@@ -269,7 +269,7 @@ if (!FS_BASE) {
     }
     var val = document.getElementById("fsact").value.toLowerCase()
     var e = JSON.parse(hex_to_ascii(val)).a
-    var url = `https://es01-fs.tech.eus/${e}/`
+    var url = `fs.php?user=${e}`
     localStorage.setItem("annapurna_fs_base", url)
     win.close()
     var FS_BASE = localStorage.getItem("annapurna_fs_base");
