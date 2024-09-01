@@ -17,7 +17,8 @@ new WinBox("Bienvenidx", {
   <article role="tabpanel" hidden id="tab-B" class="fontpix">
     <h3>Versión del S.O.</h3>
     <div hx-get="VERSION.html" hx-swap="InnerHTML" hx-trigger="load"></div>
-    <button onclick="window.location.reload(true)">Recargar</button>
+    <button onclick="window.location.reload(true)">Recargar S.O.</button>
+    <button onclick='localStorage.setItem("annapurna_fs_base", "");'>Cerrar sesión</button>
   </article>
   <article role="tabpanel" hidden id="tab-C" class="fontpix">
     <h3>Tab 3</h3>
