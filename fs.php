@@ -17,6 +17,8 @@
     fclose($fo);
   }
   if ($_GET["cmd"] == "list") {
-    scandir($base);
+    header('Content-Type: application/json');
+
+    echo json_encode(scandir($base));
   }
 ?>
