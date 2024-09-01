@@ -31,7 +31,7 @@
         continue;
       }
   
-      $path = $splFileInfo->isDir() ? array($file_name => array()) : array($file_name);
+      $path = $splFileInfo->isDir() ? array($file_name => array($file_name)) : array($file_name);
   
       for ($depth = $rii->getDepth() - 1; $depth >= 0; $depth--) {
         $path = array($rii->getSubIterator($depth)->current()->getFilename() => $path);

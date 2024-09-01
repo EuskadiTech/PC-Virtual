@@ -58,7 +58,8 @@ let Annapurna = {
         var fet = fetch(FS_BASE + "&cmd=list")
           .then(res => res.json())
           .then(json => {
-            callback(json.files);
+            var val = Object.values(json)
+            callback(val);
           });
       }
     }
