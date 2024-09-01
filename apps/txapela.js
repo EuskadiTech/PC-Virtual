@@ -89,7 +89,7 @@ const index = function() {
   const btn = Annapurna.AppSDK.UIKit.components.button({
     title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Nueva compra',
     onclick: () => {
-      FILE_PATH = "Documentos/Compras" + prompt("Nombre de la compra") + ".txapela-compra"
+      FILE_PATH = "Documentos/Compras/" + prompt("Nombre de la compra") + ".txapela-compra"
       compra({})
     }
   });
