@@ -208,7 +208,7 @@ if (window.location.hash != "") {
     return arr1.join('');
   }
   var val = window.location.hash.toLowerCase().replace("#", "")
-  var e = JSON.parse(hex_to_ascii(val)).a
+  var e = hex_to_ascii(val).split(":")[0]
   var url = `fs.php?user=${e}`
   localStorage.setItem("annapurna_fs_base", url)
   var FS_BASE = localStorage.getItem("annapurna_fs_base");
@@ -268,7 +268,7 @@ if (!FS_BASE) {
       return arr1.join('');
     }
     var val = document.getElementById("fsact").value.toLowerCase()
-    var e = JSON.parse(hex_to_ascii(val)).a
+    var e = hex_to_ascii(val).split(":")[0]
     var url = `fs.php?user=${e}`
     localStorage.setItem("annapurna_fs_base", url)
     win.close()
