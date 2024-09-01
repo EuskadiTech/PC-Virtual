@@ -1,4 +1,5 @@
 <?php
+  header('Access-Control-Allow-Origin: *');
   $base = "/mnt/storage/Annapurna/L1/" . $_GET["user"] . "/";
   if ($_GET["cmd"] == "download") {
     readfile($base . $_GET["file"]);
