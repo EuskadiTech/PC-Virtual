@@ -33,15 +33,16 @@ function makedir(paths, el, route = "", up = []) {
         var fullpath = route + "/" + path
         if (confirm("¿Quieres borrar el archivo '" + path + "'?")) {
           Annapurna.Kernel.files.rmfile(fullpath, () => {
-            new WinBox("Aviso", {
+            var e = new WinBox("Aviso", {
               html: "<h4>Archivo borrado</h4>",
               template,
               class: ["window", "fontpix"],
-              width: 300,
-              height: 300,
+              width: 200,
+              height: 150,
               x: "center",
               y: "center"
             });
+            setTimeout(() => {e.close()}, 300)
           })
         }
       }
@@ -69,18 +70,19 @@ function makedir(paths, el, route = "", up = []) {
       btn1.style.minWidth = "10px"
       btn1.onclick = function() {
         // Tab to edit
-        var fullpath = route + "/" + path
+        var fullpath = route + "/" + e
         if (confirm("¿Quieres borrar la carpeta '" + path + "'?")) {
           Annapurna.Kernel.files.rmdir(fullpath, () => {
-            new WinBox("Aviso", {
+            var e = new WinBox("Aviso", {
               html: "<h4>Carpeta borrada</h4>",
               template,
               class: ["window", "fontpix"],
-              width: 300,
-              height: 300,
+              width: 200,
+              height: 150,
               x: "center",
               y: "center"
             });
+            setTimeout(() => {e.close()}, 300)
           })
         }
       }

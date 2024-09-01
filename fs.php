@@ -1,17 +1,7 @@
 <?php
   $base = "/mnt/storage/Annapurna/L1/" . $_GET["user"] . "/";
   if ($_GET["cmd"] == "download") {
-    $bufsz = 4096;
-        
-        $fo = fopen("php://input", "wb");
-        $fi = fopen($base . $_GET["file"], "rb");
-        
-        while( $buf = fread($fi, $bufsz) ) {
-          fwrite($fo, $buf);
-        }
-        
-        fclose($fi);
-        fclose($fo);
+    readfile($base . $_GET["file"]);
   };
   if ($_GET["cmd"] == "upload") {
     $bufsz = 4096;
