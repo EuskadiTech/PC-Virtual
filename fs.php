@@ -24,14 +24,14 @@
     $tree = [];
   
     foreach ($rii as $splFileInfo) {
-      $file_name = $splFileInfo->getFilename();
+      $file_name = $splFileInfo->getBasename();
   
       // Skip hidden files and directories.
       if ($file_name[0] === '.') {
         continue;
       }
   
-      $path = $splFileInfo->isDir() ? array() : array($file_name);
+      $path = $splFileInfo->isDir() ? array($file_name) : array($file_name);
   
       for ($depth = $rii->getDepth() - 1; $depth >= 0; $depth--) {
         $path = array($rii->getSubIterator($depth)->current()->getFilename() => $path);
