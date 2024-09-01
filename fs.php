@@ -17,6 +17,6 @@
     fclose($fo);
   }
   if ($_GET["cmd"] == "list") {
-    echo scandir($base);
+    scandir($base);
   }
 ?>
