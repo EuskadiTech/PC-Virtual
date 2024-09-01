@@ -24,14 +24,14 @@ let Annapurna = {
     },
     files: {
       save: (path, content, callback) => {
-        fetch(FS_BASE + "fileup/" + encodeURI(path), { method: "post", body: content })
+        fetch(FS_BASE + "&cmd=upload&file=" + encodeURI(path), { method: "post", body: content })
           .then(res => res.text())
           .then(text => {
             callback()
           });
       },
       open: (mode, path, callback) => {
-        var fet = fetch(FS_BASE + "file/" + encodeURI(path));
+        var fet = fetch(FS_BASE + "&cmd=download&file=" + encodeURI(path));
         switch (mode) {
           case "text":
             fet.then(res => res.text()).then(text => {
@@ -209,7 +209,7 @@ if (window.location.hash != "") {
   }
   var val = window.location.hash.toLowerCase().replace("#", "")
   var e = JSON.parse(hex_to_ascii(val)).a
-  var url = `https://es01-fs.tech.eus/${e}/`
+  var url = `fs.php?user=${e}`
   localStorage.setItem("annapurna_fs_base", url)
   var FS_BASE = localStorage.getItem("annapurna_fs_base");
   var win2 = new WinBox("Activación", {
