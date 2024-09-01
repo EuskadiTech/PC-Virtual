@@ -31,7 +31,19 @@ function makedir(paths, el, route = "", up = []) {
       btn1.onclick = function() {
         // Tab to edit
         var fullpath = route + "/" + path
-        Annapurna.Kernel.files.rmfile(fullpath, () => {})
+        if (confirm("¿Quieres borrar el archivo '" + path + "'?")) {
+          Annapurna.Kernel.files.rmfile(fullpath, () => {
+            new WinBox("Aviso", {
+              html: "<h4>Archivo borrado</h4>",
+              template,
+              class: ["window", "fontpix"],
+              width: 300,
+              height: 300,
+              x: "center",
+              y: "center"
+            });
+          })
+        }
       }
 
       a.append(img, " ", e, dot, " ", btn1)
@@ -58,7 +70,19 @@ function makedir(paths, el, route = "", up = []) {
       btn1.onclick = function() {
         // Tab to edit
         var fullpath = route + "/" + path
-        Annapurna.Kernel.files.rmdir(fullpath, () => {})
+        if (confirm("¿Quieres borrar la carpeta '" + path + "'?")) {
+          Annapurna.Kernel.files.rmdir(fullpath, () => {
+            new WinBox("Aviso", {
+              html: "<h4>Carpeta borrada</h4>",
+              template,
+              class: ["window", "fontpix"],
+              width: 300,
+              height: 300,
+              x: "center",
+              y: "center"
+            });
+          })
+        }
       }
 
       a.append(img, " ", e)
@@ -71,7 +95,7 @@ function makedir(paths, el, route = "", up = []) {
       }
       li.append(a, " ", btn1)
     }
-    
+
     el.prepend(li)
   })
   if (route != "") {
