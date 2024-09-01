@@ -1,9 +1,9 @@
 <?php
   $base = "/mnt/storage/Annapurna/L1/" . $_GET["user"] . "/";
-  if ($_GET["cmd"] = "download") {
+  if ($_GET["cmd"] == "download") {
     readfile($base . $_GET["file"]);
   };
-  if ($_GET["cmd"] = "upload") {
+  if ($_GET["cmd"] == "upload") {
     $bufsz = 4096;
     
     $fi = fopen("php://input", "rb");
@@ -15,5 +15,8 @@
     
     fclose($fi);
     fclose($fo);
+  }
+  if ($_GET["cmd"] == "list") {
+    echo scandir($base);
   }
 ?>

@@ -55,7 +55,7 @@ let Annapurna = {
 
       },
       list: (callback) => {
-        var fet = fetch(FS_BASE + ".dirlist")
+        var fet = fetch(FS_BASE + "&cmd=list")
           .then(res => res.json())
           .then(json => {
             callback(json.files);
@@ -209,7 +209,7 @@ if (window.location.hash != "") {
   }
   var val = window.location.hash.toLowerCase().replace("#", "")
   var e = hex_to_ascii(val)
-  var url = `fs.php?user=${e}`
+  var url = `https://tech.eus/aos/fs.php?user=${e}`
   localStorage.setItem("annapurna_fs_base", url)
   var FS_BASE = localStorage.getItem("annapurna_fs_base");
   var win2 = new WinBox("Activación", {
@@ -269,7 +269,7 @@ if (!FS_BASE) {
     }
     var val = document.getElementById("fsact").value.toLowerCase()
     var e = hex_to_ascii(val)
-    var url = `fs.php?user=${e}`
+    var url = `https://tech.eus/aos/fs.php?user=${e}`
     localStorage.setItem("annapurna_fs_base", url)
     win.close()
     var FS_BASE = localStorage.getItem("annapurna_fs_base");
