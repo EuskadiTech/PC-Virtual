@@ -11,6 +11,10 @@ var FILE_TYPES = {
   "py": {
     "program": "apps/textedit.js",
     "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
+  },
+  "js": {
+    "type": "executable",
+    "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
   }
 };
 let Annapurna = {
@@ -30,8 +34,24 @@ let Annapurna = {
             callback()
           });
       },
+      rmfile: (path, callback) => {
+        fetch(FS_BASE + "&cmd=rmfile&file=" + encodeURI(path))
+          .then(res => res.text())
+          .then(text => {
+            callback()
+          });
+      },
+      rmdir: (path, callback) => {
+        fetch(FS_BASE + "&cmd=rmdir&file=" + encodeURI(path))
+          .then(res => res.text())
+          .then(text => {
+            callback()
+          });
+      },
       open: (mode, path, callback) => {
-        var fet = fetch(FS_BASE + "&cmd=download&file=" + encodeURI(path));
+        var pa = FS_BASE + "&cmd=download&file=" + encodeURI(path)
+        console.log()
+        var fet = fetch(pa);
         switch (mode) {
           case "text":
             fet.then(res => res.text()).then(text => {
@@ -49,7 +69,14 @@ let Annapurna = {
             });
             break;
           case "open_app":
-            Annapurna.Kernel.load(FILE_TYPES[path.split(".").slice(-1)[0]]["program"], FILE_PATH = path)
+            var ent = FILE_TYPES[path.split(".").slice(-1)[0]]
+            if (ent["type"] == "executable") {
+              fet.then(res => res.text()).then(text => {
+                Function(text)(FILE_PATH = undefined);
+              });
+            } else {
+              Annapurna.Kernel.load(ent["program"], FILE_PATH = path)
+            }
             break;
         }
 
@@ -58,7 +85,7 @@ let Annapurna = {
         var fet = fetch(FS_BASE + "&cmd=list")
           .then(res => res.json())
           .then(json => {
-            var val = Object.values(json)
+            var val = Object.entries(json)
             callback(val);
           });
       }

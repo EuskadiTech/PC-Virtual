@@ -1,7 +1,15 @@
-function makedir(paths, el, route="", up=[]) {
+function makedir(paths, el, route = "", up = []) {
   el.innerHTML = ""
-  paths.forEach((path) => {
-    console.log(path)
+  paths.forEach((entry) => {
+    var path = undefined
+    if (typeof(entry[1]) != "object") {
+      path = entry[1]
+    } else {
+      path = Array(entry[1])
+      path.unshift(entry[0])
+    }
+
+
     var li = document.createElement("li")
     var a = document.createElement("a")
     if (typeof(path) != "object") {
@@ -12,7 +20,7 @@ function makedir(paths, el, route="", up=[]) {
       var dot = document.createElement("small")
       dot.classList = "dotext"
       dot.append(".", path.split(".").slice(-1)[0])
-  
+
       var btn1 = document.createElement("button")
       var btn1_img = document.createElement("img")
       btn1_img.width = "16"
@@ -20,15 +28,20 @@ function makedir(paths, el, route="", up=[]) {
       btn1.append(btn1_img, "")
       btn1.style.width = "40px"
       btn1.style.minWidth = "10px"
-  
-  
+      btn1.onclick = function() {
+        // Tab to edit
+        var fullpath = route + "/" + path
+        Annapurna.Kernel.files.rmfile(fullpath, () => {})
+      }
+
       a.append(img, " ", e, dot, " ", btn1)
-  
+
       a.onclick = function() {
         // Tab to edit
-        var fullpath = path
+        var fullpath = route + "/" + path
         Annapurna.Kernel.files.open("open_app", fullpath)
       }
+      li.append(a, " ", btn1)
     }
     else {
       var img = document.createElement("img")
@@ -42,33 +55,36 @@ function makedir(paths, el, route="", up=[]) {
       btn1.append(btn1_img, "")
       btn1.style.width = "40px"
       btn1.style.minWidth = "10px"
-  
-  
-      a.append(img, " ", e, " ", btn1)
-  
+      btn1.onclick = function() {
+        // Tab to edit
+        var fullpath = route + "/" + path
+        Annapurna.Kernel.files.rmdir(fullpath, () => {})
+      }
+
+      a.append(img, " ", e)
+
       a.onclick = function() {
         // Tab to edit
-        
-        up.push(path)
-        console.log(up)
-        path.shift()
-        makedir(path, el, route + "/" + e, up)
+        var en = Object.entries(entry[1])
+        up.push(en)
+        makedir(en, el, route + "/" + e, up)
       }
+      li.append(a, " ", btn1)
     }
-    li.append(a)
+    
     el.prepend(li)
   })
   if (route != "") {
     var li = document.createElement("li")
     var a = document.createElement("a")
     a.append("../ (Directorio superior)")
-    
+
     a.onclick = function() {
       // Tab to edit
-      
-      var parent = route.split("/").splice(0, -2).join("/")
-      up.pop()
-      makedir(up[up.length-1], el, parent, up)
+      var parent = route.split("/")
+      parent.pop()
+      var u = up.pop()
+      makedir(up[up.length - 1], el, parent.join("/"), up)
     }
     li.append(a)
     el.prepend(li)

@@ -1,7 +1,17 @@
 <?php
   $base = "/mnt/storage/Annapurna/L1/" . $_GET["user"] . "/";
   if ($_GET["cmd"] == "download") {
-    readfile($base . $_GET["file"]);
+    $bufsz = 4096;
+        
+        $fo = fopen("php://input", "wb");
+        $fi = fopen($base . $_GET["file"], "rb");
+        
+        while( $buf = fread($fi, $bufsz) ) {
+          fwrite($fo, $buf);
+        }
+        
+        fclose($fi);
+        fclose($fo);
   };
   if ($_GET["cmd"] == "upload") {
     $bufsz = 4096;
@@ -24,14 +34,13 @@
     $tree = [];
   
     foreach ($rii as $splFileInfo) {
-      $file_name = $splFileInfo->getBasename();
+      $file_name = $splFileInfo->getFilename();
   
       // Skip hidden files and directories.
       if ($file_name[0] === '.') {
         continue;
       }
-  
-      $path = $splFileInfo->isDir() ? array($file_name) : array($file_name);
+      $path = $splFileInfo->isDir() ? array($file_name => array()) : array($file_name);
   
       for ($depth = $rii->getDepth() - 1; $depth >= 0; $depth--) {
         $path = array($rii->getSubIterator($depth)->current()->getFilename() => $path);
@@ -45,5 +54,15 @@
     header('Content-Type: application/json');
 
     echo json_encode(dir_tree($base));
+  }
+  if ($_GET["cmd"] == "mkdir") {
+    mkdir($base . $_GET["file"], 0777);
+    touch($base . $_GET["file"] . "/.no_borrar_annapurna_fs");
+  }
+  if ($_GET["cmd"] == "rmfile") {
+    unlink($base . $_GET["file"]);
+  }
+  if ($_GET["cmd"] == "rmdir") {
+    rmdir($base . $_GET["file"]);
   }
 ?>
