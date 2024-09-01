@@ -1,3 +1,5 @@
+const AVISO = "<b>Nota:</b> Debido a un problema tecnico, debes de cerrar y volver a abrir el explorador de archivos."
+
 function makedir(paths, el, route = "", up = []) {
   el.innerHTML = ""
   paths.forEach((entry) => {
@@ -34,7 +36,7 @@ function makedir(paths, el, route = "", up = []) {
         if (confirm("¿Quieres borrar el archivo '" + path + "'?")) {
           Annapurna.Kernel.files.rmfile(fullpath, () => {
             var e = new WinBox("Aviso", {
-              html: "<h4>Archivo borrado</h4>",
+              html: "<h4>Archivo borrado</h4>"+AVISO,
               template,
               class: ["window", "fontpix"],
               width: 200,
@@ -74,7 +76,7 @@ function makedir(paths, el, route = "", up = []) {
         if (confirm("¿Quieres borrar la carpeta '" + path + "'?")) {
           Annapurna.Kernel.files.rmdir(fullpath, () => {
             var e = new WinBox("Aviso", {
-              html: "<h4>Carpeta borrada</h4>",
+              html: "<h4>Carpeta borrada</h4>"+AVISO,
               template,
               class: ["window", "fontpix"],
               width: 200,
