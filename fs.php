@@ -56,5 +56,6 @@ if ($_GET["cmd"] == "rmfile") {
     unlink($base . $_GET["file"]);
 }
 if ($_GET["cmd"] == "rmdir") {
+    unlink($base . $_GET["file"] . "/.no_borrar_annapurna_fs");
     rmdir($base . $_GET["file"]);
 }

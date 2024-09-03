@@ -66,7 +66,7 @@ function makedir(paths, el, route = "", up = []) {
             }
             li.append(a, " ", btn1)
         }
-        else {
+        else if (path[0][0] != ".") {
             var img = document.createElement("img")
             img.width = "16"
             img.src = "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png"
@@ -84,9 +84,6 @@ function makedir(paths, el, route = "", up = []) {
                 Annapurna.DesktopEnv.confirm((result) => {
                     if (result) {
                         Annapurna.Kernel.files.rmdir(fullpath, () => {
-                            Annapurna.Kernel.files.list((paths2) => {
-                                makedir(Annapurna.Kernel.files.RouteFixer(paths2, route), el, route, up)
-                            });
                             var e = new WinBox("Aviso", {
                                 html: "<h4>Carpeta borrada</h4>" + AVISO,
                                 template,
@@ -96,10 +93,13 @@ function makedir(paths, el, route = "", up = []) {
                                 x: "center",
                                 y: "center"
                             });
+                            Annapurna.Kernel.files.list((paths2) => {
+                                makedir(Annapurna.Kernel.files.RouteFixer(paths2, route), el, route, up)
+                            });
                             setTimeout(() => { e.close() }, 300)
                         })
                     }
-                }, `¿Quieres borrar la carpeta "${path}"?`)
+                }, `¿Quieres borrar la carpeta "${e}"?`)
             }
 
             a.append(img, " ", e)
