@@ -29,10 +29,10 @@ function dir_tree($dir_path)
     foreach ($rii as $splFileInfo) {
         $file_name = $splFileInfo->getFilename();
 
-        // Skip hidden files and directories.
-        if ($file_name[0] === '.') {
-            continue;
-        }
+        // // Skip hidden files and directories.
+        // if ($file_name[0] === '.') {
+        //     continue;
+        // }
         $path = $splFileInfo->isDir() ? array($file_name => array()) : array($file_name);
 
         for ($depth = $rii->getDepth() - 1; $depth >= 0; $depth--) {

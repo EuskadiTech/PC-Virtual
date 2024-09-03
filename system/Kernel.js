@@ -133,35 +133,35 @@ let Annapurna = {
                     })
                 }
             },
-            save: (path, content, callback) => {
+            save: (path, content, callback = () => { }) => {
                 fetch(FS_BASE + "&cmd=upload&file=" + encodeURI(path), { method: "post", body: content })
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
-            mkdir: (path, callback) => {
+            mkdir: (path, callback = () => { }) => {
                 fetch(FS_BASE + "&cmd=mkdir&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
-            rmfile: (path, callback) => {
+            rmfile: (path, callback = () => { }) => {
                 fetch(FS_BASE + "&cmd=rmfile&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
-            rmdir: (path, callback) => {
+            rmdir: (path, callback = () => { }) => {
                 fetch(FS_BASE + "&cmd=rmdir&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
-            open: (mode, path, callback) => {
+            open: (mode, path, callback = () => { }) => {
                 var pa = FS_BASE + "&cmd=download&file=" + encodeURI(path)
                 var fet = fetch(pa);
                 switch (mode) {
@@ -193,7 +193,7 @@ let Annapurna = {
                 }
 
             },
-            list: (callback) => {
+            list: (callback = () => { }) => {
                 var fet = fetch(FS_BASE + "&cmd=list")
                     .then(res => res.json())
                     .then(json => {
@@ -271,6 +271,67 @@ let Annapurna = {
         }
     },
     DesktopEnv: {
+        prompt: (callback, msg, title = "Pregunta") => {
+            var inp = Annapurna.AppSDK.uuid()
+            var btn1 = Annapurna.AppSDK.uuid()
+            var btn2 = Annapurna.AppSDK.uuid()
+            var win = new WinBox(title, {
+                html: `${msg}<br><input size='35' id='${inp}' placeholder='Introduce...'></input><button id='${btn1}'>OK</button> <button id='${btn2}'>Cancelar</button>`,
+                template,
+                class: ["window", "fontpix"],
+                width: 300,
+                height: 200,
+                x: "center",
+                y: "center"
+            });
+            document.getElementById(btn1).onclick = () => {
+                var val = document.getElementById(inp).value
+                win.close()
+                callback(val)
+            }
+            document.getElementById(btn2).onclick = () => {
+                win.close()
+                callback(false)
+            }
+        },
+        alert: (callback = () => { }, msg, title = "Alerta") => {
+            var inp = Annapurna.AppSDK.uuid()
+            var btn1 = Annapurna.AppSDK.uuid()
+            var win = new WinBox(title, {
+                html: `${msg}<br><input size='35' id='${inp}' placeholder='Introduce...'></input<button id='${btn1}'>Cerrar</button>`,
+                template,
+                class: ["window", "fontpix"],
+                width: 300,
+                height: 200,
+                x: "center",
+                y: "center"
+            });
+            document.getElementById(btn1).onclick = () => {
+                win.close()
+                callback(val)
+            }
+        },
+        confirm: (callback, msg, title = "Confirma") => {
+            var btn1 = Annapurna.AppSDK.uuid()
+            var btn2 = Annapurna.AppSDK.uuid()
+            var win = new WinBox(title, {
+                html: `${msg}<br><button id='${btn1}'>OK</button> <button id='${btn2}'>Cancelar</button>`,
+                template,
+                class: ["window", "fontpix"],
+                width: 300,
+                height: 200,
+                x: "center",
+                y: "center"
+            });
+            document.getElementById(btn1).onclick = () => {
+                win.close()
+                callback(true)
+            }
+            document.getElementById(btn2).onclick = () => {
+                win.close()
+                callback(false)
+            }
+        },
         /**
          * Plantilla de WinBox
          */
