@@ -1,130 +1,165 @@
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Annapurna</title>
-        <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/internet_connection_wiz-4.png" />
-        <link rel="stylesheet" href="https://unpkg.com/xp.css" />
-        <script defer src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.min.js'></script>
-        <style>
-            a, li, p, button, div, input {
-              font-size: 16px !important;
-            }
-            small{
-              font-size: 9px !important;
-            }
-            .winbox {
-                position: fixed;
-                left: 0;
-                top: 0;
-                /* box-shadow:
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Annapurna</title>
+    <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/internet_connection_wiz-4.png" />
+    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.min.js'></script>
+    <style>
+        a,
+        li,
+        p,
+        button,
+        div,
+        input {
+            font-size: 16px !important;
+        }
+
+        small {
+            font-size: 9px !important;
+        }
+
+        .winbox {
+            position: fixed;
+            left: 0;
+            top: 0;
+            /* box-shadow:
                     0 14px 28px rgba(0, 0, 0, 0.25),
                     0 10px 10px rgba(0, 0, 0, 0.22);*/
-                /* using transform make contents blur when applied and requires more gpu memory */
-                transition:
-                    width 0.25s,
-                    height 0.25s,
-                    left 0s,
-                    top 0s;
-               /* transition-timing-function: cubic-bezier(0.1, 1, 0.1, 1);*/
-                /* contain "strict" does not make overflow contents selectable */
-                contain: layout size;
-                /* explicitly set text align to left fixes an issue with iframes alignment when centered */
-                text-align: left;
-                /* workaround for using passive listeners */
-                touch-action: none;
-            }
-            .overy-article article {
-                overflow-y: scroll;
-                height: calc(100% - 100px);
-            }
-            iframe {
-                height: calc(100% - 28px);
-                border: 0;
-            }
+            /* using transform make contents blur when applied and requires more gpu memory */
+            transition:
+                width 0.25s,
+                height 0.25s,
+                left 0s,
+                top 0s;
+            /* transition-timing-function: cubic-bezier(0.1, 1, 0.1, 1);*/
+            /* contain "strict" does not make overflow contents selectable */
+            contain: layout size;
+            /* explicitly set text align to left fixes an issue with iframes alignment when centered */
+            text-align: left;
+            /* workaround for using passive listeners */
+            touch-action: none;
+        }
 
-            .fh {
-                height: 100%;
-            }
-            .fw {
-                width: 100%;
-            }
-            .wb-body {
-                height: 100%;
-            }
-            .wb-title {
-              font-family: "Pixelated MS Sans Serif";
-            }
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6 {
-                margin: 0;
-            }
-            body{
-              background-color: #008080;
-              color: white;
-            }
-            .window {
-              color: black;
-            }
-            .files {
-              padding: 0;
-              list-style-type: none;
-            }
-            .tree-view{
-              overflow-y: scroll;
-              height: calc(100% - 70px);
-            }
-            .tree-view details summary{
-              list-style: none;
-            }
-            .files a:active{
-              border: 0.75px dashed black;
-              margin: calc(2px - 0.75px);
-            }
-            .files a{
-              padding: 6px;
-              color: white;
-              font-family: "Pixelated MS Sans Serif";
-              text-align: center;
-              float: left;
-              margin: 2px;
-              display: block;
-              width: 72px;
-              background-color: transparent;
-            }
-            .fontpix {
-              font-family: "Pixelated MS Sans Serif";
-            }
-            ul,ol{
-              padding-left: 15px;
-            }
-            .nomarg .wb-body{
-              padding: 0;
-              margin: 0;
-              
-            }
-            
-            .sel_prod.gold{color: green;}
-        </style>
-    </head>
-    <body>
-        <script src="https://unpkg.com/htmx.org@2.0.2"></script>
-        <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.82/dist/js/winbox.min.js"></script>
-        
-        <h3 class="fontpix">Annapurna oXP</h3>
-        <h4 class="fontpix">EuskadiTech(TM)</h4>
-        <ul class="files">
-            <li><a onclick="Annapurna.Kernel.load('apps/axisplus.js')"><img src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus</a></li>
-            <li><a onclick="Annapurna.Kernel.load('apps/txapela.js')"><img src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela</a></li>
-            <li><a onclick="Annapurna.Kernel.load('apps/files.js')"><img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" width="64">Mis Archivos</a></li>
-            <li><a onclick="Annapurna.Kernel.load('apps/bienvenidx.js')"><img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx</a></li>
-        </ul>
-        <script src="system/Kernel.js"></script>
-        
-    </body>
+        .overy-article article {
+            overflow-y: scroll;
+            height: calc(100% - 100px);
+        }
+
+        iframe {
+            height: calc(100% - 28px);
+            border: 0;
+        }
+
+        .fh {
+            height: 100%;
+        }
+
+        .fw {
+            width: 100%;
+        }
+
+        .wb-body {
+            height: 100%;
+        }
+
+        .wb-title {
+            font-family: "Pixelated MS Sans Serif";
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+        }
+
+        body {
+            background-color: #008080;
+            color: white;
+        }
+
+        .window {
+            color: black;
+        }
+
+        .files {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .tree-view {
+            overflow-y: scroll;
+            height: calc(100% - 70px);
+        }
+
+        .tree-view details summary {
+            list-style: none;
+        }
+
+        .files a:active {
+            border: 0.75px dashed black;
+            margin: calc(2px - 0.75px);
+        }
+
+        .files a {
+            padding: 6px;
+            color: white;
+            font-family: "Pixelated MS Sans Serif";
+            text-align: center;
+            float: left;
+            margin: 2px;
+            display: block;
+            width: 72px;
+            background-color: transparent;
+        }
+
+        .fontpix {
+            font-family: "Pixelated MS Sans Serif";
+        }
+
+        ul,
+        ol {
+            padding-left: 15px;
+        }
+
+        .nomarg .wb-body {
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .sel_prod.gold {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+    <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.82/dist/js/winbox.min.js"></script>
+
+    <h3 class="fontpix">Annapurna oXP</h3>
+    <h4 class="fontpix">EuskadiTech(TM)</h4>
+    <ul class="files">
+        <li><a onclick="Annapurna.Kernel.load('apps/axisplus.js')"><img
+                    src="https://win98icons.alexmeub.com/icons/png/msn3-5.png" width="64">AxisPlus</a></li>
+        <li><a onclick="Annapurna.Kernel.load('apps/txapela.js')"><img
+                    src="https://win98icons.alexmeub.com/icons/png/msagent-3.png" width="64">Txapela</a></li>
+        <li><a onclick="Annapurna.Kernel.load('apps/files.js')"><img
+                    src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" width="64">Mis
+                Archivos</a></li>
+        <li><a onclick="Annapurna.Kernel.load('apps/bienvenidx.js')"><img
+                    src="https://win98icons.alexmeub.com/icons/png/executable-0.png" width="64">Bienvenidx</a></li>
+    </ul>
+    <script>const DE_ENABLED = true;</script>
+    <script src="system/Kernel.js"></script>
+
+</body>
+
 </html>
