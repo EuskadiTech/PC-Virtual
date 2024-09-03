@@ -260,7 +260,7 @@ let Annapurna = {
     },
     Activation: {
         load_license: (license, callback_ok = () => { }, callback_fail = () => { }) => {
-            fetch("https://tech.eus/aos/licence.php?user=" + license.toUpperCase()).then(res => res.json()).then(json => {
+            fetch("https://tech.eus/aos/license.php?user=" + license.toUpperCase()).then(res => res.json()).then(json => {
                 var url = json.fs_baseurl
                 localStorage.setItem("annapurna_fs_base", url)
                 FS_BASE = url;
