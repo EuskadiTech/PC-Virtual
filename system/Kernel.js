@@ -13,6 +13,7 @@ template.innerHTML = `
   </div>
 `;
 var FS_BASE = localStorage.getItem("annapurna_fs_base");
+var LICENSENO = localStorage.getItem("annapurna_license");
 var FILE_TYPES = {
     "txapela-compra": {
         "program": "apps/txapela.js",
@@ -206,6 +207,8 @@ let Annapurna = {
                 var url = json.fs_baseurl
                 localStorage.setItem("annapurna_fs_base", url)
                 FS_BASE = url;
+                localStorage.setItem("annapurna_license", license.toUpperCase())
+                LICENSENO = license.toUpperCase()
                 callback_ok()
             }).catch(() => {
                 callback_fail()
@@ -340,7 +343,7 @@ if (DE_ENABLED) {
         })
     }
 
-    if (!FS_BASE) {
+    if (!FS_BASE || !LICENSENO) {
         var win = new WinBox("Activación", {
             html: "<h4>Activa este dispositivo.</h4><br>Debes de activar Annapurna para poder guardar archivos.<br><input size='35' id='fsact' placeholder='AABBCCDDEEFF'></input><button id='fsactbtn'>Activar</button>",
             template,
