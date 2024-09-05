@@ -18,6 +18,10 @@ var FILE_TYPES = {
         "program": "apps/txapela.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/msagent-3.png"
     },
+    "txa_c": {
+        "program": "apps/txapela.js",
+        "icon": "https://win98icons.alexmeub.com/icons/png/msagent-3.png"
+    },
     "txt": {
         "program": "apps/textedit.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/address_book_pad.png"
@@ -27,7 +31,7 @@ var FILE_TYPES = {
         "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
     },
     "js": {
-        "type": "executable",
+        "program": "apps/txapela.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
     }
 };
@@ -72,35 +76,35 @@ let Annapurna = {
          */
         files: {
             save: (path, content, callback = () => { }) => {
-                fetch(FS_BASE + "FS_BASE=upload&file=" + encodeURI(path), { method: "post", body: content })
+                fetch(FS_BASE + "?cmd=upload&file=" + encodeURI(path), { method: "post", body: content })
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
             mkdir: (path, callback = () => { }) => {
-                fetch(FS_BASE + "&cmd=mkdir&file=" + encodeURI(path))
+                fetch(FS_BASE + "?cmd=mkdir&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
             rmfile: (path, callback = () => { }) => {
-                fetch(FS_BASE + "&cmd=rmfile&file=" + encodeURI(path))
+                fetch(FS_BASE + "?cmd=rmfile&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
             rmdir: (path, callback = () => { }) => {
-                fetch(FS_BASE + "&cmd=rmdir&file=" + encodeURI(path))
+                fetch(FS_BASE + "?cmd=rmdir&file=" + encodeURI(path))
                     .then(res => res.text())
                     .then(text => {
                         callback()
                     });
             },
             open: (mode, path, callback = () => { }) => {
-                var pa = FS_BASE + "FS_BASE=download&file=" + encodeURI(path)
+                var pa = FS_BASE + "?cmd=download&file=" + encodeURI(path)
                 var fet = fetch(pa);
                 switch (mode) {
                     case "text":

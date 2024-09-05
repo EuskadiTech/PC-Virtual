@@ -1,3 +1,35 @@
+const editCode = (val) => {
+    var uid1 = Annapurna.AppSDK.uuid()
+    var uid2 = Annapurna.AppSDK.uuid()
+    var uid3 = Annapurna.AppSDK.uuid()
+    new WinBox(FILE_PATH.split("/").pop() + " - Txapela", {
+        template,
+        html: `<button id="${uid2}">Guardar</button> <button id="${uid3}">Ejecutar</button><br><textarea id="${uid1}" rows="13" cols="43"></textarea>`,
+        class: ["window", "fontpix"],
+        width: 340,
+        height: 310,
+        x: "center",
+        y: "center"
+    });
+    document.getElementById(uid1).value = val
+    document.getElementById(uid2).onclick = () => {
+        Annapurna.Kernel.files.save(FILE_PATH, document.getElementById(uid1).value, () => {
+            var w = new WinBox("Aviso", {
+                html: "<h4>Programa guardado.</h4>",
+                template,
+                class: ["window", "fontpix"],
+                width: 225,
+                height: 96,
+                x: "center",
+                y: "center"
+            });
+            setTimeout(() => { w.close() }, 2500)
+        })
+    }
+    document.getElementById(uid3).onclick = () => {
+        Function(document.getElementById(uid1).value)(FILE_PATH = undefined, CUSTOM_ARGS=undefined);
+    }
+}
 const compra = function (file) {
 
     var r = file;
@@ -74,11 +106,11 @@ const compra = function (file) {
     el.id = wwid;
     el.className = "tree-view";
     div.append(btn1.dom, " ", btn2.dom, " ", el);
-    new WinBox("Lista de la Compra", {
+    new WinBox(FILE_PATH.split("/").pop() + " - Txapela", {
         mount: div,
         template,
         class: ["window", "fontpix"],
-        width: 300,
+        width: 400,
         height: 300,
         x: "center",
         y: "center"
@@ -86,21 +118,34 @@ const compra = function (file) {
     refresh()
 };
 const index = function () {
-    const btn = Annapurna.AppSDK.UIKit.components.button({
-        title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Nueva compra',
+    const btn_code = Annapurna.AppSDK.UIKit.components.button({
+        title: '<img src="https://win98icons.alexmeub.com/icons/png/executable-0.png" height="48"><br>Nuevo programa',
         onclick: () => {
             Annapurna.DesktopEnv.prompt(
                 (fname) => {
                     if (fname != false) {
-                        FILE_PATH = "Documentos/Compras/" + fname + ".txapela-compra"
+                        FILE_PATH = "Programas/" + fname + ".js"
+                        editCode("")
+                    }
+                }, "Nombre del programa")
+        }
+    });
+    const btn_compra = Annapurna.AppSDK.UIKit.components.button({
+        title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png" height="48"><br>Nueva compra',
+        onclick: () => {
+            Annapurna.DesktopEnv.prompt(
+                (fname) => {
+                    if (fname != false) {
+                        FILE_PATH = "Documentos/Compras/" + fname + ".txa_c"
                         compra({})
                     }
                 }, "Nombre de la compra")
         }
     });
-
+    var div = document.createElement("div")
+    div.append(btn_compra.dom, " ", btn_code.dom)
     new WinBox("Txapela", {
-        mount: btn.dom,
+        mount: div,
         template,
         class: ["window", "fontpix"],
         width: 300,
@@ -114,17 +159,41 @@ if (FILE_PATH == undefined) {
 } else if (CUSTOM_ARGS == "new") {
     compra({})
 } else {
-    var w = new WinBox("Abriendo compra...", {
-        html: "<h4>Abriendo compra...</h4>",
-        template,
-        class: ["window", "fontpix"],
-        width: 300,
-        height: 150,
-        x: "center",
-        y: "center"
-    });
-    Annapurna.Kernel.files.open("json", FILE_PATH, (file) => {
-        w.close()
-        compra(file)
-    })
+    var ext = FILE_PATH.split(".").pop()
+    switch (ext) {
+        case "txa_c":
+        case "txapela-compra":
+            var w = new WinBox("Abriendo compra...", {
+                html: "<h4>Abriendo compra...</h4>",
+                template,
+                class: ["window", "fontpix"],
+                width: 300,
+                height: 150,
+                x: "center",
+                y: "center"
+            });
+            Annapurna.Kernel.files.open("json", FILE_PATH, (file) => {
+                w.close()
+                compra(file)
+            })
+            break;
+    
+        case "txa_p":
+        case "js":
+            var w = new WinBox("Abriendo programa...", {
+                html: "<h4>Abriendo programa...</h4>",
+                template,
+                class: ["window", "fontpix"],
+                width: 300,
+                height: 150,
+                x: "center",
+                y: "center"
+            });
+            Annapurna.Kernel.files.open("text", FILE_PATH, (file) => {
+                w.close()
+                editCode(file)
+            })
+            break;
+            
+    }
 }

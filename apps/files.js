@@ -30,8 +30,8 @@ function makedir(paths, el, route = "") {
                 Annapurna.DesktopEnv.confirm((result) => {
                     if (result) {
                         Annapurna.Kernel.files.rmfile(fullpath, () => {
-                            Annapurna.Kernel.files.list(route, (paths2) => {
-                                makedir(paths2, el, route)
+                            Annapurna.Kernel.files.list(CROUTE, (paths2) => {
+                                makedir(paths2, el, CROUTE)
                             });
                             var e = new WinBox("Aviso", {
                                 html: "<h4>Archivo borrado</h4>" + AVISO,
@@ -42,7 +42,7 @@ function makedir(paths, el, route = "") {
                                 x: "center",
                                 y: "center"
                             });
-                            setTimeout(() => { e.close() }, 3000)
+                            setTimeout(() => { e.close() }, 1750)
                         })
                     }
                 }, `¿Quieres borrar el archivo "${entry.name}"?`)
@@ -85,10 +85,10 @@ function makedir(paths, el, route = "") {
                                 x: "center",
                                 y: "center"
                             });
-                            Annapurna.Kernel.files.list(route, (paths2) => {
-                                makedir(paths2, el, route)
+                            Annapurna.Kernel.files.list(CROUTE, (paths2) => {
+                                makedir(paths2, el, CROUTE)
                             });
-                            setTimeout(() => { e.close() }, 3000)
+                            setTimeout(() => { e.close() }, 1750)
                         })
                     }
                 }, `¿Quieres borrar la carpeta "${e}"?`)
