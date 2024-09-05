@@ -57,84 +57,22 @@ let Annapurna = {
          * Descarga y ejecuta el programa en el URL
          * @param  {string} url URL del programa
          * @param  {string|undefined} path Ruta de la carpeta actual
+         * @param  {any|undefined} args Parametros extra
          * @return {void}
          */
-        load: (url, path = undefined) => {
+        load: (url, path = undefined, args = undefined) => {
             fetch(url)
                 .then(res => res.text())
                 .then(text => {
-                    Function(text)(FILE_PATH = path);
+                    Function(text)(FILE_PATH = path, CUSTOM_ARGS=args);
                 });
         },
         /**
          * Sistema de archivos
          */
         files: {
-            /**
-             * Consigue la lista recursiva de archivos desde una ruta
-             * @param  {object} RecursiveFileList Lista recursiva de archivos
-             * @param  {string|object} route Ruta
-             * @return {object} Lista recursiva de archivos
-             */
-            RouteFixer: (RecursiveFileList, route) => {
-                // Convert string to Array
-                // Convertir una cadena a un Array
-                if (typeof (route) == "string") {
-                    console.debug("Route: Got string " + route)
-                    route = route.split("/")
-                }
-                // Remove empty values in the route
-                // Eliminar valores vacios en la ruta
-                route = route.filter(i => i)
-                var currentRoute = []
-                var OutputRFL = RecursiveFileList
-                var currentDepth = 0
-                var iterations = 0
-                var maxIterations = parseInt(Annapurna.Kernel.registry.get("Kernel__files__RouteFixer__MaxIterations", "250"))
-                // Stop when the iterations exceed the max
-                // Parar cuando se pasa el limite de iteraciónes (para no sobrecargar el navegador)
-                while (iterations <= maxIterations) {
-                    iterations += 1
-                    // If the routes match
-                    // Si las rutas coinciden
-                    if (currentRoute.join("/") == route.join("/")) {
-                        console.debug("Route: Path Fixed")
-                        // Return the contents of the correct folder.
-                        // Devolver el contenido de la carpeta correcta.
-                        return OutputRFL;
-                    }
-
-                    // Folder name that we want for this iteration
-                    // Nombre de la carpeta que queremos
-                    var wantedName = route[currentDepth]
-                    console.debug("Route: Wants " + wantedName)
-                    OutputRFL.forEach((RFLEntry) => {
-                        if (typeof (path) == "object") {
-                            var folderName = RFLEntry[0]
-                            console.debug("Route: Subitem " + folderName)
-                            // If this folder and the folder we want are the same
-                            // Si la carpeta actual y la carpeta que queremos se llaman igual
-                            if (folderName == wantedName) {
-                                console.debug("Route: Tested " + folderName)
-                                // Go deeper
-                                // Ir mas profundo
-                                currentDepth += 1
-                                // Add folder to current route
-                                // Añadir carpeta a la ruta actual
-                                currentRoute.push(folderName)
-                                // Contents of the folder
-                                // Contenidos de la carpeta
-                                var folderContents = Object.entries(RFLEntry[1])
-                                // Set the (temporary) output to this folder's contents
-                                // Establece la salida (temporal) a el contenido de esta carpeta
-                                OutputRFL = folderContents
-                            }
-                        }
-                    })
-                }
-            },
             save: (path, content, callback = () => { }) => {
-                fetch(FS_BASE + "&cmd=upload&file=" + encodeURI(path), { method: "post", body: content })
+                fetch(FS_BASE + "FS_BASE=upload&file=" + encodeURI(path), { method: "post", body: content })
                     .then(res => res.text())
                     .then(text => {
                         callback()
@@ -162,7 +100,7 @@ let Annapurna = {
                     });
             },
             open: (mode, path, callback = () => { }) => {
-                var pa = FS_BASE + "&cmd=download&file=" + encodeURI(path)
+                var pa = FS_BASE + "FS_BASE=download&file=" + encodeURI(path)
                 var fet = fetch(pa);
                 switch (mode) {
                     case "text":
@@ -193,11 +131,11 @@ let Annapurna = {
                 }
 
             },
-            list: (callback = () => { }) => {
-                var fet = fetch(FS_BASE + "&cmd=list")
+            list: (folder = "/", callback = () => { }) => {
+                var fet = fetch(FS_BASE + "?cmd=list&file="+encodeURI(folder))
                     .then(res => res.json())
                     .then(json => {
-                        var val = Object.entries(json)
+                        var val = json
                         callback(val);
                     });
             }
@@ -260,7 +198,7 @@ let Annapurna = {
     },
     Activation: {
         load_license: (license, callback_ok = () => { }, callback_fail = () => { }) => {
-            fetch("https://tech.eus/aos/license.php?user=" + license.toUpperCase()).then(res => res.json()).then(json => {
+            fetch("https://es01.naiel.fyi/license/" + license.toUpperCase()).then(res => res.json()).then(json => {
                 var url = json.fs_baseurl
                 localStorage.setItem("annapurna_fs_base", url)
                 FS_BASE = url;

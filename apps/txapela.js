@@ -89,8 +89,13 @@ const index = function () {
     const btn = Annapurna.AppSDK.UIKit.components.button({
         title: '<img src="https://win98icons.alexmeub.com/icons/png/printer-0.png"><br>Nueva compra',
         onclick: () => {
-            FILE_PATH = "Documentos/Compras/" + prompt("Nombre de la compra") + ".txapela-compra"
-            compra({})
+            Annapurna.DesktopEnv.prompt(
+                (fname) => {
+                    if (fname != false) {
+                        FILE_PATH = "Documentos/Compras/" + fname + ".txapela-compra"
+                        compra({})
+                    }
+                }, "Nombre de la compra")
         }
     });
 
@@ -106,6 +111,8 @@ const index = function () {
 };
 if (FILE_PATH == undefined) {
     index();
+} else if (CUSTOM_ARGS == "new") {
+    compra({})
 } else {
     var w = new WinBox("Abriendo compra...", {
         html: "<h4>Abriendo compra...</h4>",

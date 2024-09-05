@@ -12,6 +12,7 @@ new WinBox("Bienvenidx", {
     Sigue estos pasos para una buena experiencia con tu PC Virtual.
     <ol>
       <li>Activa este dispositivo</li>
+      <li>Haz una compra en Txapela</li>
     </ol>
   </article>
   <article role="tabpanel" hidden id="tab-B" class="fontpix">

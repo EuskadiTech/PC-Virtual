@@ -1,29 +1,21 @@
-const AVISO = "<b>Nota:</b> Debido a un problema tecnico, debes de cerrar y volver a abrir el explorador de archivos."
-var CROURE = ""
+const AVISO = ""
+var CROUTE = ""
 
-function makedir(paths, el, route = "", up = []) {
-    CROURE = route
+function makedir(paths, el, route = "") {
+    CROUTE = route
     el.innerHTML = ""
     paths.forEach((entry) => {
-        var path = undefined
-        if (typeof (entry[1]) != "object") {
-            path = entry[1]
-        } else {
-            path = Array(entry[1])
-            path.unshift(entry[0])
-        }
-
-
         var li = document.createElement("li")
         var a = document.createElement("a")
-        if (typeof (path) != "object" && path[0] != ".") {
+        console.log(entry)
+        if (!entry.isFolder && entry.name[0] != ".") {
             var img = document.createElement("img")
             img.width = "16"
-            img.src = FILE_TYPES[path.split(".").slice(-1)[0]]["icon"]
-            var e = path.split(".").slice(0, -1).join(".")
+            img.src = FILE_TYPES[entry.name.split(".").slice(-1)[0]]["icon"]
+            var e = entry.name.split(".").slice(0, -1).join(".")
             var dot = document.createElement("small")
             dot.classList = "dotext"
-            dot.append(".", path.split(".").slice(-1)[0])
+            dot.append(".", entry.name.split(".").slice(-1)[0])
 
             var btn1 = document.createElement("button")
             var btn1_img = document.createElement("img")
@@ -34,12 +26,12 @@ function makedir(paths, el, route = "", up = []) {
             btn1.style.minWidth = "10px"
             btn1.onclick = function () {
                 // Tab to edit
-                var fullpath = route + "/" + path
+                var fullpath = route + "/" + entry.name
                 Annapurna.DesktopEnv.confirm((result) => {
                     if (result) {
                         Annapurna.Kernel.files.rmfile(fullpath, () => {
-                            Annapurna.Kernel.files.list((paths2) => {
-                                makedir(Annapurna.Kernel.files.RouteFixer(paths2, route), el, route, up)
+                            Annapurna.Kernel.files.list(route, (paths2) => {
+                                makedir(paths2, el, route)
                             });
                             var e = new WinBox("Aviso", {
                                 html: "<h4>Archivo borrado</h4>" + AVISO,
@@ -50,10 +42,10 @@ function makedir(paths, el, route = "", up = []) {
                                 x: "center",
                                 y: "center"
                             });
-                            setTimeout(() => { e.close() }, 300)
+                            setTimeout(() => { e.close() }, 3000)
                         })
                     }
-                }, `¿Quieres borrar el archivo "${path}"?`)
+                }, `¿Quieres borrar el archivo "${entry.name}"?`)
 
             }
 
@@ -61,16 +53,16 @@ function makedir(paths, el, route = "", up = []) {
 
             a.onclick = function () {
                 // Tab to edit
-                var fullpath = route + "/" + path
+                var fullpath = route + "/" + entry.name
                 Annapurna.Kernel.files.open("open_app", fullpath)
             }
             li.append(a, " ", btn1)
         }
-        else if (path[0][0] != ".") {
+        else if (entry.name[0] != ".") {
             var img = document.createElement("img")
             img.width = "16"
             img.src = "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png"
-            var e = path[0]
+            var e = entry.name
             var btn1 = document.createElement("button")
             var btn1_img = document.createElement("img")
             btn1_img.width = "16"
@@ -93,10 +85,10 @@ function makedir(paths, el, route = "", up = []) {
                                 x: "center",
                                 y: "center"
                             });
-                            Annapurna.Kernel.files.list((paths2) => {
-                                makedir(Annapurna.Kernel.files.RouteFixer(paths2, route), el, route, up)
+                            Annapurna.Kernel.files.list(route, (paths2) => {
+                                makedir(paths2, el, route)
                             });
-                            setTimeout(() => { e.close() }, 300)
+                            setTimeout(() => { e.close() }, 3000)
                         })
                     }
                 }, `¿Quieres borrar la carpeta "${e}"?`)
@@ -106,9 +98,9 @@ function makedir(paths, el, route = "", up = []) {
 
             a.onclick = function () {
                 // Tab to edit
-                var en = Object.entries(entry[1])
-                up.push(en)
-                makedir(en, el, route + "/" + e, up)
+                Annapurna.Kernel.files.list(route + "/" + e, (paths2) => {
+                    makedir(paths2, el, route + "/" + e)
+                });
             }
             li.append(a, " ", btn1)
         }
@@ -124,8 +116,9 @@ function makedir(paths, el, route = "", up = []) {
             // Tab to edit
             var parent = route.split("/")
             parent.pop()
-            var u = up.pop()
-            makedir(up[up.length - 1], el, parent.join("/"), up)
+            Annapurna.Kernel.files.list(parent.join("/"), (paths2) => {
+                makedir(paths2, el, parent.join("/"))
+            });
         }
         li.append(a)
         el.prepend(li)
@@ -156,7 +149,7 @@ const newitem = function () {
         img.width = "16"
         var ele2 = document.createElement("a")
         ele2.append(img, " ", file_type.name)
-        ele2.onclick = () => { file_type.onclick(CROURE) }
+        ele2.onclick = () => { file_type.onclick(CROUTE) }
         ele.append(ele2)
         el.append(ele)
     })
@@ -178,19 +171,19 @@ const index = function () {
         title: "Nuevo",
         onclick: () => { newitem() }
     });
-    const btn2 = Annapurna.AppSDK.UIKit.components.button({
-        title: "Recargar",
-        onclick: () => {
-            Annapurna.Kernel.files.list((paths) => {
-                Annapurna.Kernel.files.RouteFixer(paths, CROURE)
-            });
-        }
-    });
     const div = document.createElement("div");
     div.className = "fh";
     const el = document.createElement("ul");
     el.id = wwid;
     el.className = "tree-view";
+    const btn2 = Annapurna.AppSDK.UIKit.components.button({
+        title: "Recargar",
+        onclick: () => {
+            Annapurna.Kernel.files.list(CROUTE, (paths) => {
+                makedir(paths, el, CROUTE)
+            });
+        }
+    });
     div.append(btn1.dom, " ", btn2.dom, " ", el);
     new WinBox("Mis Archivos", {
         mount: div,
@@ -201,8 +194,8 @@ const index = function () {
         x: "center",
         y: "center"
     });
-    Annapurna.Kernel.files.list((paths) => {
-        makedir(paths, el, "", [paths])
+    Annapurna.Kernel.files.list("/", (paths) => {
+        makedir(paths, el, "")
     });
 };
 index();
