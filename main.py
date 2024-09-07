@@ -5,8 +5,8 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-BASE_FS = "/mnt/storage/Annapurna/L1/"
-BASE_LIC = "/mnt/storage/Annapurna/License/"
+BASE_FS = "/DATA/L1/"
+BASE_LIC = "/DATA/License/"
 
 @app.route('/')
 def index():
