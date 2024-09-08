@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request
 import os
 from flask_cors import CORS
 import json
+import base64
 app = Flask(__name__)
 CORS(app)
 
@@ -16,6 +17,24 @@ def index():
 def license(licno):
     path = os.path.join(BASE_LIC, licno + ".json")
     return json.load(open(path))
+
+@app.route('/<user>/wopi/files/<fileb64>/contents', methods=["GET", "POST"])
+@app.route('/<user>/wopi/files/<fileb64>/ws/contents', methods=["GET", "POST"])
+def wopi_files__contents(user, fileb64):
+    file = base64.urlsafe_b64decode(fileb64).decode("utf-8")
+    path = os.path.join(BASE_FS, user + "/" + file)
+    if request.method == "POST":
+        with open(path, "wb") as f:
+            f.write(request.get_data())
+    return send_from_directory(BASE_FS, user + "/" + file)
+
+@app.route('/<user>/wopi/files/<fileb64>/ws', methods=["GET"])
+@app.route('/<user>/wopi/files/<fileb64>', methods=["GET"])
+def wopi_files(user, fileb64):
+    file = base64.urlsafe_b64decode(fileb64).decode("utf-8")
+    path = os.path.join(BASE_FS, user + "/" + file)
+    return {"BaseFileName": file.split("/")[-1], "Size": 11}
+
 
 @app.route('/<user>/fs', methods=["POST", "GET"])
 def filesystem(user):
