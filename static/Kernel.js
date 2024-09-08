@@ -16,23 +16,23 @@ var FS_BASE = localStorage.getItem("annapurna_fs_base");
 var LICENSENO = localStorage.getItem("annapurna_license");
 var FILE_TYPES = {
     "txapela-compra": {
-        "program": "apps/txapela.js",
+        "program": "static/apps/txapela.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/msagent-3.png"
     },
     "txa_c": {
-        "program": "apps/txapela.js",
+        "program": "static/apps/txapela.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/msagent-3.png"
     },
     "txt": {
-        "program": "apps/textedit.js",
+        "program": "static/apps/textedit.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/address_book_pad.png"
     },
     "py": {
-        "program": "apps/textedit.js",
+        "program": "static/apps/textedit.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
     },
     "js": {
-        "program": "apps/txapela.js",
+        "program": "static/apps/txapela.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"
     }
 };
