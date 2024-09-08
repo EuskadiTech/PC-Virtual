@@ -1,5 +1,5 @@
 function hacer_la_compra(){
-    var num = new Date().toISOString()
+    var num = new Date().toISOString().split("T")[0]
     new WinBox("TX: Hacer la compra", {
         template,
         html: `
@@ -8,7 +8,7 @@ function hacer_la_compra(){
             <hr>
             Para hacer la compra puedes seguir estos pasos:
             <ol>
-                <li><a onclick="Annapurna.Kernel.load('apps/txapela.js', 'Documentos/Compras/Compra del ${num}.txapela-compra', 'new')">Abre una nueva compra</a> y pulsa "Calcular Precios"</li>
+                <li><a onclick="Annapurna.Kernel.load('static/apps/txapela.js', 'Documentos/Compras/Compra del ${num}.txapela-compra', 'new')">Abre una nueva compra</a> y pulsa "Calcular Precios"</li>
                 <li>Busca los precios mas baratos de los productos que quieras comprar</li>
                 <li>Guarda la compra</li>
                 <li>Y exporta la compra</li>

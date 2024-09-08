@@ -203,7 +203,7 @@ let Annapurna = {
     },
     Activation: {
         load_license: (license, callback_ok = () => { }, callback_fail = () => { }) => {
-            fetch("https://abe.tech.eus/license/" + license.toUpperCase()).then(res => res.json()).then(json => {
+            fetch("license/" + license.toUpperCase()).then(res => res.json()).then(json => {
                 var url = json.fs_baseurl
                 localStorage.setItem("annapurna_fs_base", url)
                 FS_BASE = url;
@@ -357,6 +357,7 @@ if (DE_ENABLED) {
             var val = document.getElementById("fsact").value.toLowerCase()
 
             Annapurna.Activation.load_license(val, () => {
+                win.close()
                 var win2 = new WinBox("Activación", {
                     html: "<h4>¡Dispositivo activado correctamente!</h4><br>Se cerrará esta ventana en 5 segundos",
                     template,
