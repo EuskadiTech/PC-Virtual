@@ -72,5 +72,5 @@ def filesystem(user):
 if __name__ == '__main__':
     run = Flask(__name__)
     run.register_blueprint(app)
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    run.run(host='0.0.0.0', port=8080, debug=False)
  
