@@ -27,6 +27,14 @@ var FILE_TYPES = {
         "program": "static/apps/textedit.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/address_book_pad.png"
     },
+    "docx": {
+        "program": "static/apps/txapela.js",
+        "icon": "https://win98icons.alexmeub.com/icons/png/address_book_pad.png"
+    },
+    "odt": {
+        "program": "static/apps/txapela.js",
+        "icon": "https://win98icons.alexmeub.com/icons/png/address_book_pad.png"
+    },
     "py": {
         "program": "static/apps/textedit.js",
         "icon": "https://win98icons.alexmeub.com/icons/png/appwizard-5.png"

@@ -1,3 +1,16 @@
+var LICENSENO = localStorage.getItem("annapurna_license");
+var WOPI_BASE = "https://tech.eus/nextcloud/apps/richdocumentscode_arm64/proxy.php?req=/browser/ca2ed20/cool.html?WOPISrc=https://anna.tech.eus/" + LICENSENO.toLowerCase() + "/wopi/files/"
+const editWopi = () => {
+    var fileid = encodeURIComponent(btoa(FILE_PATH))
+    var embed = WOPI_BASE + fileid
+    new WinBox("Txapela", {
+        html: `<iframe src="${embed}" width="100%"></iframe>`,
+        template,
+        class: ["window", "nomarg"],
+        width: 700,
+        height: 500
+    });
+}
 const editCode = (val) => {
     var uid1 = Annapurna.AppSDK.uuid()
     var uid2 = Annapurna.AppSDK.uuid()
@@ -177,7 +190,6 @@ if (FILE_PATH == undefined) {
                 compra(file)
             })
             break;
-    
         case "txa_p":
         case "js":
             var w = new WinBox("Abriendo programa...", {
@@ -194,6 +206,19 @@ if (FILE_PATH == undefined) {
                 editCode(file)
             })
             break;
-            
+        case "docx":
+        case "odt":
+            //var w = new WinBox("Abriendo documento...", {
+            //    html: "<h4>Abriendo documento...</h4>",
+            //    template,
+            //    class: ["window", "fontpix"],
+            //    width: 300,
+            //    height: 150,
+            //    x: "center",
+            //    y: "center"
+            //});
+            editWopi()
+            break;
     }
 }
+

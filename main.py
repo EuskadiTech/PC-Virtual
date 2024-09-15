@@ -33,7 +33,7 @@ def wopi_files__contents(user, fileb64):
 def wopi_files(user, fileb64):
     file = base64.urlsafe_b64decode(fileb64).decode("utf-8")
     path = os.path.join(BASE_FS, user + "/" + file)
-    return {"BaseFileName": file.split("/")[-1], "Size": os.stat(path).st_size}
+    return {"BaseFileName": file.split("/")[-1], "Size": os.stat(path).st_size, "UserCanWrite": True}
 
 
 @app.route('/<user>/fs', methods=["POST", "GET"])
