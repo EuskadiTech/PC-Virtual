@@ -136,7 +136,6 @@ const newitem = function () {
             "onclick": (CurrentRoute) => {
                 Annapurna.DesktopEnv.prompt(
                     (fname) => {
-                        
                         Annapurna.Kernel.files.mkdir(CurrentRoute + "/" + fname)
                     }, "Nombre de la carpeta", "Crear")
             }
@@ -147,7 +146,6 @@ const newitem = function () {
             "onclick": (CurrentRoute) => {
                 Annapurna.DesktopEnv.prompt(
                     (fname) => {
-                        alert()
                         Annapurna.Kernel.files.save(CurrentRoute + "/" + fname + ".docx", "")
                         Annapurna.Kernel.files.open("open_app", CurrentRoute + "/" + fname + ".docx")
                     }, "Nombre del Documento", "Crear")
