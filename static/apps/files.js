@@ -140,7 +140,6 @@ const newitem = function () {
                     Annapurna.Kernel.files.mkdir(CurrentRoute + "/" + fname)
                 }, "Nombre de la carpeta", "Crear")
         },
-            
         {
         "name": "Documento",
         "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
@@ -149,7 +148,7 @@ const newitem = function () {
                 (fname) => {
                     alert()
                     Annapurna.Kernel.files.write(CurrentRoute + "/" + fname + ".docx", "")
-                    Annapurna.Kernel.files.open("open_app", Annapurna.Kernel.files.write(CurrentRoute + "/" + fname + ".docx")
+                    Annapurna.Kernel.files.open("open_app", CurrentRoute + "/" + fname + ".docx")
                 }, "Nombre del Documento", "Crear")
         }
 
