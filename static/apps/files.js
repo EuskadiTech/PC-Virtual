@@ -131,27 +131,28 @@ const newitem = function () {
     el.className = "tree-view";
     var ft = [
         {
-        "name": "Carpeta",
-        "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
-        "onclick": (CurrentRoute) => {
-            Annapurna.DesktopEnv.prompt(
-                (fname) => {
-                    
-                    Annapurna.Kernel.files.mkdir(CurrentRoute + "/" + fname)
-                }, "Nombre de la carpeta", "Crear")
+            "name": "Carpeta",
+            "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
+            "onclick": (CurrentRoute) => {
+                Annapurna.DesktopEnv.prompt(
+                    (fname) => {
+                        
+                        Annapurna.Kernel.files.mkdir(CurrentRoute + "/" + fname)
+                    }, "Nombre de la carpeta", "Crear")
+            }
         },
         {
-        "name": "Documento",
-        "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
-        "onclick": (CurrentRoute) => {
-            Annapurna.DesktopEnv.prompt(
-                (fname) => {
-                    alert()
-                    Annapurna.Kernel.files.save(CurrentRoute + "/" + fname + ".docx", "")
-                    Annapurna.Kernel.files.open("open_app", CurrentRoute + "/" + fname + ".docx")
-                }, "Nombre del Documento", "Crear")
+            "name": "Documento",
+            "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
+            "onclick": (CurrentRoute) => {
+                Annapurna.DesktopEnv.prompt(
+                    (fname) => {
+                        alert()
+                        Annapurna.Kernel.files.save(CurrentRoute + "/" + fname + ".docx", "")
+                        Annapurna.Kernel.files.open("open_app", CurrentRoute + "/" + fname + ".docx")
+                    }, "Nombre del Documento", "Crear")
+            }
         }
-
     ]
 
     ft.forEach((file_type) => {
