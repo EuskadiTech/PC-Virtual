@@ -147,12 +147,12 @@ const newitem = function () {
             Annapurna.DesktopEnv.prompt(
                 (fname) => {
                     alert()
-                    Annapurna.Kernel.files.write(CurrentRoute + "/" + fname + ".docx", "")
+                    Annapurna.Kernel.files.save(CurrentRoute + "/" + fname + ".docx", "")
                     Annapurna.Kernel.files.open("open_app", CurrentRoute + "/" + fname + ".docx")
                 }, "Nombre del Documento", "Crear")
         }
 
-    }]
+    ]
 
     ft.forEach((file_type) => {
         var ele = document.createElement("li")
