@@ -1,9 +1,9 @@
-from flask import Flask, render_template, send_from_directory, request
+from flask import Flask, Blueprint, render_template, send_from_directory, request
 import os
 from flask_cors import CORS
 import json
 import base64
-app = Flask(__name__)
+app = Blueprint("annapurna", __name__)
 CORS(app)
 
 BASE_FS = "/DATA/L1/"
@@ -70,5 +70,7 @@ def filesystem(user):
         except Exception as e:
             return "24;Not empty"
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    run = Flask(__name__)
+    run.register_blueprint(app)
+    run.run(host='0.0.0.0', port=8080, debug=False)
  
