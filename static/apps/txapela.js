@@ -12,6 +12,7 @@ const editWopi = () => {
     });
 }
 const editCode = (val) => {
+    var f = FILE_PATH
     var uid1 = Annapurna.AppSDK.uuid()
     var uid2 = Annapurna.AppSDK.uuid()
     var uid3 = Annapurna.AppSDK.uuid()
@@ -26,7 +27,7 @@ const editCode = (val) => {
     });
     document.getElementById(uid1).value = val
     document.getElementById(uid2).onclick = () => {
-        Annapurna.Kernel.files.save(FILE_PATH, document.getElementById(uid1).value, () => {
+        Annapurna.Kernel.files.save(f, document.getElementById(uid1).value, () => {
             var w = new WinBox("Aviso", {
                 html: "<h4>Programa guardado.</h4>",
                 template,
