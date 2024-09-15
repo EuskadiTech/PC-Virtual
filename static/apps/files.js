@@ -129,15 +129,28 @@ function makedir(paths, el, route = "") {
 const newitem = function () {
     const el = document.createElement("ul");
     el.className = "tree-view";
-    var ft = [{
+    var ft = [
+        {
         "name": "Carpeta",
         "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
         "onclick": (CurrentRoute) => {
             Annapurna.DesktopEnv.prompt(
                 (fname) => {
-                    alert(CurrentRoute + "/" + fname)
+                    
                     Annapurna.Kernel.files.mkdir(CurrentRoute + "/" + fname)
                 }, "Nombre de la carpeta", "Crear")
+        },
+            
+        {
+        "name": "Documento",
+        "icon": "https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png",
+        "onclick": (CurrentRoute) => {
+            Annapurna.DesktopEnv.prompt(
+                (fname) => {
+                    alert()
+                    Annapurna.Kernel.files.write(CurrentRoute + "/" + fname + ".docx", "")
+                    Annapurna.Kernel.files.open("open_app", Annapurna.Kernel.files.write(CurrentRoute + "/" + fname + ".docx")
+                }, "Nombre del Documento", "Crear")
         }
 
     }]
