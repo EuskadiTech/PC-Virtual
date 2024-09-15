@@ -24,7 +24,7 @@ const editCode = (val) => {
         x: "center",
         y: "center"
     });
-    document.getElementById(uid1).value = val
+    document.getElementById(uid1).innerText = val
     document.getElementById(uid2).onclick = () => {
         Annapurna.Kernel.files.save(FILE_PATH, document.getElementById(uid1).value, () => {
             var w = new WinBox("Aviso", {
